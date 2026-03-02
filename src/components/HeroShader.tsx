@@ -19,6 +19,7 @@ uniform float u_time;
 uniform vec2 u_resolution;
 uniform vec2 u_mouse;
 
+// --- Simplex 3D Noise ---
 vec4 permute(vec4 x) { return mod(((x*34.0)+1.0)*x, 289.0); }
 vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
 
@@ -65,43 +66,103 @@ float snoise(vec3 v) {
   return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
 }
 
+// Grid line function — returns intensity
+float gridLine(vec2 p, float spacing, float thickness) {
+  vec2 grid = abs(fract(p / spacing - 0.5) - 0.5) * spacing;
+  float line = min(grid.x, grid.y);
+  return 1.0 - smoothstep(0.0, thickness, line);
+}
+
+// Dot at grid intersections
+float gridDot(vec2 p, float spacing, float radius) {
+  vec2 cell = fract(p / spacing) - 0.5;
+  return 1.0 - smoothstep(radius - 0.003, radius, length(cell) * spacing);
+}
+
 void main() {
   vec2 uv = v_uv;
   float aspect = u_resolution.x / u_resolution.y;
   vec2 p = (uv - 0.5) * vec2(aspect, 1.0);
+  float t = u_time * 0.08;
 
-  float t = u_time * 0.15;
+  // --- Noise fields ---
+  float n1 = snoise(vec3(p * 0.9, t * 0.7)) * 0.5 + 0.5;
+  float n2 = snoise(vec3(p * 1.8 + 5.0, t * 0.5 + 10.0)) * 0.5 + 0.5;
+  float n3 = snoise(vec3(p * 3.0 - 3.0, t * 0.9 + 20.0)) * 0.5 + 0.5;
 
-  float n1 = snoise(vec3(p * 1.2, t * 0.8)) * 0.5 + 0.5;
-  float n2 = snoise(vec3(p * 2.4 + 3.0, t * 0.6 + 10.0)) * 0.5 + 0.5;
-  float n3 = snoise(vec3(p * 0.8 - 5.0, t * 1.0 + 20.0)) * 0.5 + 0.5;
-
+  // Mouse
   vec2 mouseUV = u_mouse * vec2(aspect, 1.0);
-  vec2 pAspect = p;
-  float mouseDist = length(pAspect - mouseUV);
-  float mouseInfluence = smoothstep(0.5, 0.0, mouseDist) * 0.15;
-  n1 += mouseInfluence;
-  n2 -= mouseInfluence * 0.5;
+  float mouseDist = length(p - mouseUV);
+  float mouseWarp = smoothstep(0.4, 0.0, mouseDist) * 0.10;
+  n1 += mouseWarp;
+  n2 += mouseWarp * 0.5;
 
-  vec3 navy   = vec3(0.027, 0.251, 0.420);
-  vec3 blue   = vec3(0.094, 0.388, 0.863);
-  vec3 sky    = vec3(0.165, 0.655, 0.875);
-  vec3 light  = vec3(0.922, 0.957, 1.000);
+  // Color palette — light, clean, bold accents
+  vec3 cleanWhite = vec3(0.96, 0.975, 0.995);   // near-white with cool tint
+  vec3 softTint   = vec3(0.92, 0.96, 0.99);      // #EBF4FF area
+  vec3 brandBlue  = vec3(0.094, 0.388, 0.863);   // #1863DC
+  vec3 accentSky  = vec3(0.165, 0.655, 0.875);   // #2AA7DF
+  vec3 brandNavy  = vec3(0.027, 0.251, 0.420);   // #07406B
 
-  vec3 col = navy;
-  col = mix(col, blue, smoothstep(0.3, 0.7, n1));
-  col = mix(col, sky, smoothstep(0.5, 0.8, n2) * 0.6);
-  col = mix(col, light, smoothstep(0.4, 0.9, n3) * 0.5);
+  // --- Build clean light base ---
+  vec3 col = cleanWhite;
+  // Subtle tint variation — barely perceptible warm/cool shifts
+  col = mix(col, softTint, smoothstep(0.3, 0.7, n1) * 0.6);
 
-  float centerDist = length(uv - 0.5);
-  float centerFade = 1.0 - smoothstep(0.0, 0.6, centerDist);
-  col = mix(col, light, centerFade * 0.65);
+  // Bold blue energy at edges — confident, not dark
+  float edgeDist = length(p);
+  float edgeMask = smoothstep(0.25, 0.75, edgeDist);
+  vec3 edgeColor = mix(brandBlue, accentSky, n2);
+  col = mix(col, edgeColor, edgeMask * 0.18);
 
-  float vignette = smoothstep(0.0, 0.7, centerDist);
-  col = mix(col, col * 0.7, vignette * 0.3);
+  // Flowing accent ribbons — brand blue moves through the field
+  float ribbon1 = smoothstep(0.55, 0.75, n3) * smoothstep(0.85, 0.75, n3);
+  col = mix(col, brandBlue, ribbon1 * 0.12);
+  float ribbon2 = smoothstep(0.45, 0.6, n2) * smoothstep(0.7, 0.6, n2);
+  col = mix(col, accentSky, ribbon2 * 0.08);
 
-  float grain = (snoise(vec3(uv * 500.0, t * 50.0)) * 0.5 + 0.5) * 0.03;
-  col += grain;
+  // Mouse proximity — bold blue glow near cursor
+  float mouseGlow = smoothstep(0.3, 0.0, mouseDist);
+  col = mix(col, brandBlue, mouseGlow * 0.12);
+  col = mix(col, accentSky, mouseGlow * 0.04);
+
+  // --- Grid overlay ---
+  vec2 gridP = p;
+  gridP += vec2(
+    snoise(vec3(p * 0.5, t * 0.3)) * 0.015,
+    snoise(vec3(p * 0.5 + 10.0, t * 0.3)) * 0.015
+  );
+
+  float gridSpacing = 0.10;
+  float lines = gridLine(gridP, gridSpacing, 0.0006);
+  float dots = gridDot(gridP, gridSpacing, 0.006);
+
+  // Grid visible across the field, stronger at edges
+  float gridFade = 0.3 + edgeMask * 0.7;
+  // Mouse reveals grid nearby
+  float mouseGridBoost = smoothstep(0.25, 0.0, mouseDist) * 0.6;
+  gridFade = min(gridFade + mouseGridBoost, 1.0);
+
+  // Grid drawn in brand blue on light background
+  col = mix(col, brandBlue * 0.5, lines * gridFade * 0.12);
+  col = mix(col, brandBlue, dots * gridFade * 0.2);
+
+  // Node pulse — dots near mouse pulse bolder
+  float nodePulse = smoothstep(0.18, 0.0, mouseDist) * dots;
+  col = mix(col, brandBlue, nodePulse * 0.5);
+  col = mix(col, accentSky, nodePulse * 0.2);
+
+  // --- Subtle bottom edge fade to navy (anchors the hero) ---
+  float bottomFade = smoothstep(0.3, 0.5, -p.y);
+  col = mix(col, brandNavy, bottomFade * 0.08);
+
+  // --- Very subtle scan lines for texture ---
+  float scanline = sin(uv.y * u_resolution.y * 0.5) * 0.5 + 0.5;
+  col *= 0.995 + scanline * 0.005;
+
+  // --- Light film grain ---
+  float grain = (snoise(vec3(uv * 400.0, t * 40.0)) * 0.5 + 0.5) * 0.012;
+  col += grain - 0.006; // center around zero to avoid brightening
 
   fragColor = vec4(col, 1.0);
 }`;

@@ -30,7 +30,7 @@ import {
 } from 'motion/react';
 import { useState, useRef, useEffect, type RefObject } from 'react';
 import HeroShader from './HeroShader';
-import SectionDivider from './SectionDivider';
+
 
 // --- Nav Data ---
 const navLinks = [
@@ -375,10 +375,6 @@ export default function DesignFinal() {
           from { transform: scaleX(0); }
           to { transform: scaleX(1); }
         }
-        @keyframes glassRotate {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
         @keyframes gentleFloat {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-10px); }
@@ -561,36 +557,112 @@ export default function DesignFinal() {
         </motion.div>
       </section>
 
-      <SectionDivider id="hero-about" fromColor="#ffffff" toColor="#F8FAFC" />
+
 
       {/* === 3. About — Sticky scroll with flying photos === */}
       <section id="about" className="bg-[#F8FAFC]">
         {/* Desktop: sticky scroll experience */}
         <div className="hidden md:block" ref={aboutContainerRef} style={{ height: '250vh' }}>
           <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
-            {/* Glass orb — far left */}
-            <motion.div style={{ y: photo1Y }} className="absolute left-[6%] z-10">
-              <div className="w-52 h-52 rounded-full bg-white/20 backdrop-blur-xl shadow-2xl border-t border-white/30 flex items-center justify-center">
-                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-brand-primary/20 to-brand-sky/20 blur-sm" />
+            {/* Element 1 — Layered architecture fragment, far left */}
+            <motion.div style={{ y: photo1Y }} className="absolute left-[4%] z-10">
+              <div className="relative w-56 h-72 -rotate-6">
+                {/* Outer frame */}
+                <div className="absolute inset-0 rounded-2xl border border-brand-primary/20" />
+                {/* Inner offset frame */}
+                <div className="absolute inset-3 rounded-xl border border-brand-sky/15" />
+                {/* Content block — code-like lines */}
+                <div className="absolute top-8 left-6 right-6 space-y-2.5">
+                  <div className="h-1 w-3/4 rounded-full bg-brand-primary/15" />
+                  <div className="h-1 w-1/2 rounded-full bg-brand-sky/12" />
+                  <div className="h-1 w-5/6 rounded-full bg-brand-primary/10" />
+                  <div className="h-1 w-2/3 rounded-full bg-brand-sky/8" />
+                  <div className="h-px w-full bg-brand-gray/30 mt-4" />
+                  <div className="h-1 w-1/3 rounded-full bg-brand-primary/12" />
+                  <div className="h-1 w-3/5 rounded-full bg-brand-sky/10" />
+                </div>
+                {/* Corner accent */}
+                <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-brand-primary/25 rounded-br-lg" />
+                {/* Status dot */}
+                <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-brand-primary/40" />
               </div>
             </motion.div>
 
-            {/* Gradient disc — far right */}
-            <motion.div style={{ y: photo2Y }} className="absolute right-[8%] z-10">
-              <div className="w-64 h-64 rounded-full blur-2xl" style={{ background: 'radial-gradient(circle, rgba(42,167,223,0.15), rgba(24,99,220,0.1), transparent)' }} />
+            {/* Element 2 — Isometric data block, far right */}
+            <motion.div style={{ y: photo2Y }} className="absolute right-[6%] z-10">
+              <div className="relative w-52 h-64 rotate-3">
+                {/* Card body */}
+                <div className="absolute inset-0 rounded-2xl bg-white/[0.04] backdrop-blur-sm border border-brand-primary/10 overflow-hidden">
+                  {/* Header bar */}
+                  <div className="h-8 border-b border-brand-primary/10 flex items-center px-3 gap-1.5">
+                    <div className="w-1.5 h-1.5 rounded-full bg-brand-primary/30" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-brand-sky/25" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-brand-muted/20" />
+                  </div>
+                  {/* Bar chart mock */}
+                  <div className="absolute bottom-6 left-4 right-4 flex items-end gap-2 h-24">
+                    <div className="flex-1 bg-brand-primary/12 rounded-t" style={{ height: '45%' }} />
+                    <div className="flex-1 bg-brand-primary/18 rounded-t" style={{ height: '72%' }} />
+                    <div className="flex-1 bg-brand-sky/15 rounded-t" style={{ height: '58%' }} />
+                    <div className="flex-1 bg-brand-primary/20 rounded-t" style={{ height: '90%' }} />
+                    <div className="flex-1 bg-brand-sky/12 rounded-t" style={{ height: '65%' }} />
+                    <div className="flex-1 bg-brand-primary/15 rounded-t" style={{ height: '40%' }} />
+                  </div>
+                  {/* Axis line */}
+                  <div className="absolute bottom-5 left-3 right-3 h-px bg-brand-primary/10" />
+                </div>
+              </div>
             </motion.div>
 
-            {/* Glass card — left-center */}
-            <motion.div style={{ y: photo3Y }} className="absolute left-[20%] z-10">
-              <div className="w-44 h-56 rounded-3xl bg-white/15 backdrop-blur-lg shadow-xl border border-white/20 rotate-3" />
+            {/* Element 3 — Network node cluster, left-center */}
+            <motion.div style={{ y: photo3Y }} className="absolute left-[22%] z-10">
+              <div className="relative w-40 h-40 rotate-12">
+                <svg viewBox="0 0 160 160" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  {/* Connection lines */}
+                  <line x1="40" y1="30" x2="120" y2="60" stroke="#1863DC" strokeOpacity="0.15" strokeWidth="1" />
+                  <line x1="120" y1="60" x2="80" y2="130" stroke="#2AA7DF" strokeOpacity="0.12" strokeWidth="1" />
+                  <line x1="80" y1="130" x2="40" y2="30" stroke="#1863DC" strokeOpacity="0.1" strokeWidth="1" />
+                  <line x1="30" y1="90" x2="120" y2="60" stroke="#2AA7DF" strokeOpacity="0.08" strokeWidth="1" />
+                  <line x1="30" y1="90" x2="80" y2="130" stroke="#1863DC" strokeOpacity="0.1" strokeWidth="1" />
+                  <line x1="140" y1="120" x2="120" y2="60" stroke="#1863DC" strokeOpacity="0.08" strokeWidth="1" />
+                  <line x1="140" y1="120" x2="80" y2="130" stroke="#2AA7DF" strokeOpacity="0.1" strokeWidth="1" />
+                  {/* Nodes */}
+                  <circle cx="40" cy="30" r="4" fill="#1863DC" fillOpacity="0.2" />
+                  <circle cx="40" cy="30" r="1.5" fill="#1863DC" fillOpacity="0.5" />
+                  <circle cx="120" cy="60" r="5" fill="#1863DC" fillOpacity="0.15" />
+                  <circle cx="120" cy="60" r="2" fill="#1863DC" fillOpacity="0.4" />
+                  <circle cx="80" cy="130" r="4" fill="#2AA7DF" fillOpacity="0.2" />
+                  <circle cx="80" cy="130" r="1.5" fill="#2AA7DF" fillOpacity="0.5" />
+                  <circle cx="30" cy="90" r="3" fill="#2AA7DF" fillOpacity="0.15" />
+                  <circle cx="30" cy="90" r="1" fill="#2AA7DF" fillOpacity="0.4" />
+                  <circle cx="140" cy="120" r="3.5" fill="#1863DC" fillOpacity="0.12" />
+                  <circle cx="140" cy="120" r="1.2" fill="#1863DC" fillOpacity="0.35" />
+                </svg>
+              </div>
             </motion.div>
 
-            {/* Geometric ring accent — right-center, passes in FRONT of text */}
-            <motion.div style={{ y: photo4Y }} className="absolute right-[16%] z-30 opacity-20">
-              <div
-                className="w-48 h-48 rounded-full border-2 border-brand-primary"
-                style={{ animation: 'glassRotate 40s linear infinite' }}
-              />
+            {/* Element 4 — Blueprint grid fragment, right-center, passes in FRONT */}
+            <motion.div style={{ y: photo4Y }} className="absolute right-[14%] z-30 opacity-30">
+              <div className="relative w-44 h-44 -rotate-3">
+                <svg viewBox="0 0 176 176" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  {/* Grid lines */}
+                  <line x1="0" y1="44" x2="176" y2="44" stroke="#1863DC" strokeOpacity="0.15" strokeWidth="0.5" />
+                  <line x1="0" y1="88" x2="176" y2="88" stroke="#1863DC" strokeOpacity="0.15" strokeWidth="0.5" />
+                  <line x1="0" y1="132" x2="176" y2="132" stroke="#1863DC" strokeOpacity="0.15" strokeWidth="0.5" />
+                  <line x1="44" y1="0" x2="44" y2="176" stroke="#1863DC" strokeOpacity="0.15" strokeWidth="0.5" />
+                  <line x1="88" y1="0" x2="88" y2="176" stroke="#1863DC" strokeOpacity="0.15" strokeWidth="0.5" />
+                  <line x1="132" y1="0" x2="132" y2="176" stroke="#1863DC" strokeOpacity="0.15" strokeWidth="0.5" />
+                  {/* Highlight rectangle */}
+                  <rect x="44" y="44" width="88" height="44" stroke="#1863DC" strokeOpacity="0.3" strokeWidth="1" rx="2" />
+                  {/* Measurement marks */}
+                  <circle cx="44" cy="44" r="2" fill="#1863DC" fillOpacity="0.25" />
+                  <circle cx="132" cy="44" r="2" fill="#1863DC" fillOpacity="0.25" />
+                  <circle cx="132" cy="88" r="2" fill="#2AA7DF" fillOpacity="0.25" />
+                  <circle cx="44" cy="88" r="2" fill="#2AA7DF" fillOpacity="0.25" />
+                  {/* Diagonal dimension line */}
+                  <line x1="44" y1="88" x2="132" y2="44" stroke="#2AA7DF" strokeOpacity="0.2" strokeWidth="0.5" strokeDasharray="4 3" />
+                </svg>
+              </div>
             </motion.div>
 
             {/* Centered text — on top */}
@@ -612,10 +684,33 @@ export default function DesignFinal() {
           <p className="text-3xl font-semibold text-brand-navy leading-tight mb-8">
             We are passionate about empowering mid-market companies to take control of their operations and achieve their growth goals.
           </p>
-          <div className="flex justify-center gap-4 flex-wrap mt-8">
-            <div className="w-24 h-24 rounded-full bg-white/30 backdrop-blur-xl shadow-lg border-t border-white/20" style={{ animation: 'gentleFloat 6s ease-in-out infinite' }} />
-            <div className="w-32 h-32 rounded-full blur-xl" style={{ background: 'radial-gradient(circle, rgba(42,167,223,0.15), transparent)' }} />
-            <div className="w-20 h-20 rounded-2xl bg-white/20 backdrop-blur-lg shadow-md border border-white/15 rotate-12" style={{ animation: 'gentleFloat 8s ease-in-out infinite 1s' }} />
+          <div className="flex justify-center gap-6 flex-wrap mt-8">
+            {/* Mini network node cluster */}
+            <div className="w-24 h-24" style={{ animation: 'gentleFloat 6s ease-in-out infinite' }}>
+              <svg viewBox="0 0 96 96" fill="none" className="w-full h-full">
+                <line x1="20" y1="20" x2="76" y2="40" stroke="#1863DC" strokeOpacity="0.15" strokeWidth="1" />
+                <line x1="76" y1="40" x2="48" y2="76" stroke="#2AA7DF" strokeOpacity="0.12" strokeWidth="1" />
+                <line x1="48" y1="76" x2="20" y2="20" stroke="#1863DC" strokeOpacity="0.1" strokeWidth="1" />
+                <circle cx="20" cy="20" r="3" fill="#1863DC" fillOpacity="0.2" />
+                <circle cx="20" cy="20" r="1.2" fill="#1863DC" fillOpacity="0.5" />
+                <circle cx="76" cy="40" r="4" fill="#1863DC" fillOpacity="0.15" />
+                <circle cx="76" cy="40" r="1.5" fill="#1863DC" fillOpacity="0.4" />
+                <circle cx="48" cy="76" r="3" fill="#2AA7DF" fillOpacity="0.2" />
+                <circle cx="48" cy="76" r="1.2" fill="#2AA7DF" fillOpacity="0.5" />
+              </svg>
+            </div>
+            {/* Mini architecture fragment */}
+            <div className="w-28 h-20 rounded-lg border border-brand-primary/10 bg-white/[0.04] overflow-hidden" style={{ animation: 'gentleFloat 8s ease-in-out infinite 1s' }}>
+              <div className="h-5 border-b border-brand-primary/8 flex items-center px-2 gap-1">
+                <div className="w-1 h-1 rounded-full bg-brand-primary/25" />
+                <div className="w-1 h-1 rounded-full bg-brand-sky/20" />
+              </div>
+              <div className="p-2 space-y-1.5">
+                <div className="h-px w-16 bg-brand-primary/10" />
+                <div className="h-px w-12 bg-brand-sky/8" />
+                <div className="h-px w-14 bg-brand-primary/6" />
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -690,8 +785,6 @@ export default function DesignFinal() {
         </div>
       </section>
 
-      <SectionDivider id="industries-caps" fromColor="#ffffff" toColor="#F8FAFC" />
-
       {/* === 5. Capabilities — Fixed horizontal scroll === */}
       <section id="capabilities" className="bg-[#F8FAFC]">
         {/* Desktop: horizontal scroll */}
@@ -765,8 +858,6 @@ export default function DesignFinal() {
           ))}
         </div>
       </section>
-
-      <SectionDivider id="caps-process" fromColor="#F8FAFC" toColor="#ffffff" flip />
 
       {/* === 6. Process — Interactive split layout === */}
       <section id="process" className="py-24 md:py-32 bg-white">
@@ -851,8 +942,6 @@ export default function DesignFinal() {
         </div>
       </section>
 
-      <SectionDivider id="process-casestudy" fromColor="#ffffff" toColor="#07406B" dramatic height={160} />
-
       {/* === 7. Case Study — Dark immersive === */}
       <section id="case-study" className="bg-brand-navy text-white py-24 md:py-32">
         <div className="max-w-6xl mx-auto px-6">
@@ -931,8 +1020,6 @@ export default function DesignFinal() {
           </motion.a>
         </div>
       </section>
-
-      <SectionDivider id="casestudy-booking" fromColor="#07406B" toColor="#F8FAFC" flip height={140} />
 
       {/* === 8. Discovery Call Booking === */}
       <section id="book" className="bg-[#F8FAFC] py-24 md:py-32">
