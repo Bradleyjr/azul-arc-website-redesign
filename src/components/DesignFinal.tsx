@@ -16,11 +16,6 @@ import {
   Layers01Icon,
   ServerStack01Icon,
   CodeIcon,
-  Search01Icon,
-  SourceCodeIcon,
-  RocketIcon,
-  HeadsetIcon,
-  QuoteDownIcon,
   ArrowLeft01Icon,
   CheckmarkCircle01Icon,
 } from '@hugeicons/core-free-icons';
@@ -34,6 +29,7 @@ import {
   animate,
 } from 'motion/react';
 import { useState, useRef, useEffect, type RefObject } from 'react';
+import HeroShader from './HeroShader';
 
 // --- Nav Data ---
 const navLinks = [
@@ -122,35 +118,30 @@ const processSteps = [
     num: "01",
     title: "Discover",
     desc: "We map your operations, interview stakeholders, and identify the highest-leverage opportunities for impact.",
-    icon: Search01Icon,
     duration: "2-3 weeks",
   },
   {
     num: "02",
     title: "Blueprint",
     desc: "A detailed technical plan with architecture decisions, timeline, and guaranteed ROI projections.",
-    icon: SourceCodeIcon,
     duration: "2-3 weeks",
   },
   {
     num: "03",
     title: "Design & Build",
     desc: "Agile sprints with milestone demos. You see working software every two weeks — not slide decks.",
-    icon: CodeIcon,
     duration: "3-9 months",
   },
   {
     num: "04",
     title: "Deploy",
     desc: "Phased rollouts, data migration, and hands-on training so adoption happens on day one.",
-    icon: RocketIcon,
     duration: "2-4 weeks",
   },
   {
     num: "05",
     title: "Evolve",
     desc: "Ongoing maintenance, performance monitoring, and iterative improvements as your needs grow.",
-    icon: HeadsetIcon,
     duration: "Ongoing",
   },
 ];
@@ -231,14 +222,13 @@ function CalendarWidget() {
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
 
   const daysInMarch = 31;
-  const startDay = 0; // March 2026 starts on Sunday
+  const startDay = 0;
   const dayHeaders = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
   const timeSlots = ['9:00 AM', '10:30 AM', '1:00 PM', '3:30 PM'];
 
   const blanks = Array.from({ length: startDay }, (_, i) => i);
   const days = Array.from({ length: daysInMarch }, (_, i) => i + 1);
 
-  // Weekend days (Saturday=6, Sunday=0)
   const isWeekend = (day: number) => {
     const dayOfWeek = (startDay + day - 1) % 7;
     return dayOfWeek === 0 || dayOfWeek === 6;
@@ -246,7 +236,6 @@ function CalendarWidget() {
 
   return (
     <div className="bg-white rounded-2xl border border-brand-gray shadow-sm p-6">
-      {/* Month header */}
       <div className="flex items-center justify-between mb-6">
         <button className="w-8 h-8 rounded-full flex items-center justify-center text-brand-muted hover:bg-brand-tint transition-colors">
           <HugeiconsIcon icon={ArrowLeft01Icon} size={18} />
@@ -257,7 +246,6 @@ function CalendarWidget() {
         </button>
       </div>
 
-      {/* Day headers */}
       <div className="grid grid-cols-7 gap-1 mb-2">
         {dayHeaders.map((d) => (
           <div key={d} className="text-center text-xs font-semibold text-brand-muted py-1">
@@ -266,7 +254,6 @@ function CalendarWidget() {
         ))}
       </div>
 
-      {/* Day grid */}
       <div className="grid grid-cols-7 gap-1">
         {blanks.map((b) => (
           <div key={`blank-${b}`} />
@@ -274,7 +261,7 @@ function CalendarWidget() {
         {days.map((day) => {
           const weekend = isWeekend(day);
           const selected = selectedDate === day;
-          const past = day < 2; // March 2 is today
+          const past = day < 2;
           return (
             <button
               key={day}
@@ -295,7 +282,6 @@ function CalendarWidget() {
         })}
       </div>
 
-      {/* Time slots */}
       {selectedDate && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -325,7 +311,6 @@ function CalendarWidget() {
         </motion.div>
       )}
 
-      {/* Confirm button */}
       <button
         disabled={!selectedDate || !selectedTime}
         className={`w-full mt-6 py-3 rounded-full text-sm font-semibold transition-all duration-200
@@ -345,7 +330,7 @@ function CalendarWidget() {
 export default function DesignFinal() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [activeProcessStep, setActiveProcessStep] = useState(0);
 
   // Hero parallax
   const heroRef = useRef<HTMLElement>(null);
@@ -356,51 +341,34 @@ export default function DesignFinal() {
   const heroScale = useTransform(heroProgress, [0, 1], [1, 0.95]);
   const heroOpacity = useTransform(heroProgress, [0, 0.8], [1, 0]);
 
+  // About section — sticky scroll with flying photos
+  const aboutContainerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: aboutProgress } = useScroll({
+    target: aboutContainerRef as RefObject<HTMLElement>,
+    offset: ['start start', 'end end'],
+  });
+  const photo1Y = useTransform(aboutProgress, [0, 1], [500, -700]);
+  const photo2Y = useTransform(aboutProgress, [0, 1], [700, -500]);
+  const photo3Y = useTransform(aboutProgress, [0, 1], [400, -800]);
+  const photo4Y = useTransform(aboutProgress, [0, 1], [600, -600]);
+
   // Horizontal scroll for capabilities
   const capsContainerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: capsProgress } = useScroll({
     target: capsContainerRef as RefObject<HTMLElement>,
     offset: ['start start', 'end end'],
   });
-  const capsX = useTransform(capsProgress, [0, 1], ['0%', '-87.5%']);
-
-  // Process timeline scroll
-  const processRef = useRef<HTMLElement>(null);
-  const { scrollYProgress: processProgress } = useScroll({
-    target: processRef as RefObject<HTMLElement>,
-    offset: ['start end', 'end start'],
-  });
-  const lineScaleY = useTransform(processProgress, [0, 0.8], [0, 1]);
-
-  // Testimonial auto-advance
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, []);
+  const capsX = useTransform(capsProgress, [0, 1], ['0%', '-65%']);
 
   return (
-    <div className="bg-white text-brand-dark font-sans min-h-screen relative overflow-hidden selection:bg-brand-primary selection:text-white">
-      {/* Animated gradient keyframes */}
+    <div className="bg-white text-brand-dark font-sans min-h-screen relative selection:bg-brand-primary selection:text-white">
+      {/* Keyframes */}
       <style>{`
         @keyframes gradientPulse {
-          0%, 100% {
-            background-position: 50% 50%;
-            background-size: 200% 200%;
-          }
-          25% {
-            background-position: 0% 50%;
-            background-size: 250% 250%;
-          }
-          50% {
-            background-position: 100% 50%;
-            background-size: 200% 200%;
-          }
-          75% {
-            background-position: 50% 0%;
-            background-size: 250% 250%;
-          }
+          0%, 100% { background-position: 50% 50%; background-size: 200% 200%; }
+          25% { background-position: 0% 50%; background-size: 250% 250%; }
+          50% { background-position: 100% 50%; background-size: 200% 200%; }
+          75% { background-position: 50% 0%; background-size: 250% 250%; }
         }
         @keyframes underlineGrow {
           from { transform: scaleX(0); }
@@ -497,19 +465,30 @@ export default function DesignFinal() {
       </header>
 
 
-      {/* === 2. Hero — MASSIVE typography === */}
+      {/* === 2. Hero — GLSL Shader === */}
       <section
         ref={heroRef}
         className="min-h-screen flex items-center justify-center relative overflow-hidden"
-        style={{
-          background: 'radial-gradient(ellipse at 50% 50%, #EBF4FF 0%, #ffffff 60%, #ffffff 100%)',
-          backgroundSize: '200% 200%',
-          animation: 'gradientPulse 12s ease-in-out infinite',
-        }}
       >
+        {/* WebGL shader — desktop only */}
+        <div className="hidden md:block absolute inset-0">
+          <HeroShader />
+        </div>
+
+        {/* Mobile fallback — CSS gradient */}
+        <div
+          className="md:hidden absolute inset-0"
+          style={{
+            background: 'radial-gradient(ellipse at 50% 50%, #EBF4FF 0%, #ffffff 40%, #07406B 100%)',
+            backgroundSize: '200% 200%',
+            animation: 'gradientPulse 12s ease-in-out infinite',
+          }}
+        />
+
+        {/* Hero content */}
         <motion.div
           style={{ scale: heroScale, opacity: heroOpacity }}
-          className="max-w-6xl mx-auto px-6 pt-32 pb-32 text-center w-full"
+          className="max-w-6xl mx-auto px-6 pt-32 pb-32 text-center w-full relative z-10"
         >
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
@@ -559,7 +538,7 @@ export default function DesignFinal() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.7 }}
-          className="absolute bottom-12 left-0 right-0 flex justify-center gap-12"
+          className="absolute bottom-12 left-0 right-0 flex justify-center gap-12 z-10"
         >
           <div className="text-center">
             <div className="text-2xl font-bold text-brand-navy">80%</div>
@@ -574,44 +553,81 @@ export default function DesignFinal() {
       </section>
 
 
-      {/* === 3. About — Photo cascade === */}
-      <section id="about" className="bg-[#F8FAFC] py-24 md:py-32">
-        <div className="max-w-5xl mx-auto px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.6 }}
-          >
-            <SectionBadge label="ABOUT US" />
-          </motion.div>
+      {/* === 3. About — Sticky scroll with flying photos === */}
+      <section id="about" className="bg-[#F8FAFC]">
+        {/* Desktop: sticky scroll experience */}
+        <div className="hidden md:block" ref={aboutContainerRef} style={{ height: '250vh' }}>
+          <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
+            {/* Photo 1 — far left */}
+            <motion.div
+              style={{ y: photo1Y }}
+              className="absolute left-[6%] z-10"
+            >
+              <div className="w-52 h-72 rounded-2xl bg-brand-tint shadow-lg -rotate-3 flex items-center justify-center">
+                <span className="text-brand-muted text-xs">Photo 1</span>
+              </div>
+            </motion.div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-2xl sm:text-3xl md:text-4xl font-medium text-brand-navy max-w-4xl mx-auto leading-relaxed mb-16"
-          >
+            {/* Photo 2 — far right */}
+            <motion.div
+              style={{ y: photo2Y }}
+              className="absolute right-[8%] z-10"
+            >
+              <div className="w-48 h-64 rounded-2xl bg-brand-tint shadow-lg rotate-2 flex items-center justify-center">
+                <span className="text-brand-muted text-xs">Photo 2</span>
+              </div>
+            </motion.div>
+
+            {/* Photo 3 — left-center */}
+            <motion.div
+              style={{ y: photo3Y }}
+              className="absolute left-[22%] z-10"
+            >
+              <div className="w-44 h-56 rounded-2xl bg-brand-tint shadow-lg rotate-1 flex items-center justify-center">
+                <span className="text-brand-muted text-xs">Photo 3</span>
+              </div>
+            </motion.div>
+
+            {/* Photo 4 — right-center */}
+            <motion.div
+              style={{ y: photo4Y }}
+              className="absolute right-[18%] z-10"
+            >
+              <div className="w-56 h-68 rounded-2xl bg-brand-tint shadow-lg -rotate-[1.5deg] flex items-center justify-center" style={{ height: '17rem' }}>
+                <span className="text-brand-muted text-xs">Photo 4</span>
+              </div>
+            </motion.div>
+
+            {/* Centered text — on top */}
+            <div className="relative z-20 text-center max-w-4xl mx-auto px-6">
+              <div className="flex items-center justify-center gap-2 mb-6">
+                <span className="text-brand-primary">&#10022;</span>
+                <span className="text-xs font-semibold tracking-[0.2em] uppercase text-brand-primary">ABOUT US</span>
+              </div>
+              <p className="text-4xl md:text-5xl lg:text-[3.5rem] font-semibold text-brand-navy leading-[1.15] tracking-tight">
+                We are passionate about empowering mid-market companies to take control of their operations and achieve their growth goals.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile: simple layout */}
+        <div className="md:hidden py-24 px-6 text-center">
+          <SectionBadge label="ABOUT US" />
+          <p className="text-3xl font-semibold text-brand-navy leading-tight mb-8">
             We are passionate about empowering mid-market companies to take control of their operations and achieve their growth goals.
-          </motion.p>
-
-          <div className="flex flex-wrap justify-center gap-6">
-            {[
-              { w: 'w-64', h: 'h-48', rotate: '-rotate-2' },
-              { w: 'w-56', h: 'h-64', rotate: 'rotate-1' },
-              { w: 'w-72', h: 'h-52', rotate: '-rotate-[1.5deg]' },
-              { w: 'w-60', h: 'h-56', rotate: 'rotate-2' },
-            ].map((frame, i) => (
+          </p>
+          <div className="grid grid-cols-2 gap-3">
+            {[1, 2, 3, 4].map((i) => (
               <motion.div
                 key={i}
-                initial={{ y: 100, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                className={`${frame.w} ${frame.h} ${frame.rotate} bg-brand-tint rounded-2xl flex items-center justify-center shadow-sm hidden md:flex`}
+                transition={{ duration: 0.6, delay: i * 0.1 }}
+                className="bg-brand-tint rounded-2xl h-32 flex items-center justify-center"
               >
-                <span className="text-brand-muted text-xs">Photo {i + 1}</span>
+                <span className="text-brand-muted text-xs">Photo {i}</span>
               </motion.div>
             ))}
           </div>
@@ -640,7 +656,6 @@ export default function DesignFinal() {
             </p>
           </motion.div>
 
-          {/* Tab buttons */}
           <div className="flex flex-wrap gap-2 mb-10">
             {challenges.map((c, i) => (
               <button
@@ -658,7 +673,6 @@ export default function DesignFinal() {
             ))}
           </div>
 
-          {/* Tab content */}
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
@@ -691,36 +705,31 @@ export default function DesignFinal() {
       </section>
 
 
-      {/* === 5. Capabilities — Horizontal scroll === */}
+      {/* === 5. Capabilities — Fixed horizontal scroll === */}
       <section id="capabilities" className="bg-[#F8FAFC]">
-        <div className="max-w-7xl mx-auto px-6 pt-24 md:pt-32 pb-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.6 }}
-          >
-            <SectionBadge label="CAPABILITIES" />
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-brand-navy leading-tight mb-4">
-              Full-service. Full-stack.
-            </h2>
-            <p className="text-lg text-brand-muted max-w-xl">
-              From research to production — we own the entire stack.
-            </p>
-          </motion.div>
-        </div>
+        {/* Desktop: horizontal scroll */}
+        <div className="hidden md:block" ref={capsContainerRef} style={{ height: '300vh' }}>
+          <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
+            {/* Header — inside sticky so no gap */}
+            <div className="max-w-7xl mx-auto px-6 w-full mb-10">
+              <SectionBadge label="CAPABILITIES" />
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-brand-navy leading-tight mb-3">
+                Full-service. Full-stack.
+              </h2>
+              <p className="text-lg text-brand-muted max-w-xl">
+                From research to production — we own the entire stack.
+              </p>
+            </div>
 
-        {/* Desktop: Horizontal scroll */}
-        <div className="hidden md:block" ref={capsContainerRef} style={{ height: 'calc(100vh * 3)' }}>
-          <div className="sticky top-0 h-screen overflow-hidden flex items-center">
             {/* Left fade */}
             <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#F8FAFC] to-transparent z-10 pointer-events-none" />
             {/* Right fade */}
             <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#F8FAFC] to-transparent z-10 pointer-events-none" />
 
+            {/* Cards track */}
             <motion.div
               style={{ x: capsX }}
-              className="flex gap-6 pl-12 pr-48"
+              className="flex gap-8 pl-6"
             >
               {capabilities.map((cap, i) => (
                 <motion.div
@@ -729,13 +738,13 @@ export default function DesignFinal() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.05 }}
-                  className="w-[350px] shrink-0 bg-white rounded-2xl shadow-sm border border-brand-gray p-8 hover:shadow-md hover:border-brand-primary/30 transition-all duration-300 group"
+                  className="w-[480px] shrink-0 bg-white rounded-3xl shadow-sm border border-brand-gray p-10 hover:shadow-lg hover:border-brand-primary/30 transition-all duration-300 group"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-brand-tint flex items-center justify-center text-brand-primary mb-6 group-hover:bg-brand-primary group-hover:text-white transition-colors duration-300">
-                    <HugeiconsIcon icon={cap.icon} size={24} />
+                  <div className="w-14 h-14 rounded-2xl bg-brand-tint flex items-center justify-center text-brand-primary mb-8 group-hover:bg-brand-primary group-hover:text-white transition-colors duration-300">
+                    <HugeiconsIcon icon={cap.icon} size={28} />
                   </div>
-                  <h3 className="text-xl font-bold tracking-tight text-brand-navy mb-3">{cap.title}</h3>
-                  <p className="text-brand-muted text-sm leading-relaxed">{cap.desc}</p>
+                  <h3 className="text-2xl font-bold tracking-tight text-brand-navy mb-4">{cap.title}</h3>
+                  <p className="text-brand-muted leading-relaxed">{cap.desc}</p>
                 </motion.div>
               ))}
             </motion.div>
@@ -743,7 +752,14 @@ export default function DesignFinal() {
         </div>
 
         {/* Mobile: Vertical stack */}
-        <div className="md:hidden px-6 pb-24 space-y-4">
+        <div className="md:hidden px-6 py-24 space-y-4">
+          <SectionBadge label="CAPABILITIES" />
+          <h2 className="text-3xl font-bold tracking-tight text-brand-navy leading-tight mb-3">
+            Full-service. Full-stack.
+          </h2>
+          <p className="text-base text-brand-muted mb-8">
+            From research to production — we own the entire stack.
+          </p>
           {capabilities.map((cap, i) => (
             <motion.div
               key={cap.title}
@@ -764,15 +780,15 @@ export default function DesignFinal() {
       </section>
 
 
-      {/* === 6. Process — Zigzag timeline === */}
-      <section id="process" ref={processRef} className="py-24 md:py-32 bg-white">
-        <div className="max-w-5xl mx-auto px-6">
+      {/* === 6. Process — Interactive split layout === */}
+      <section id="process" className="py-24 md:py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.6 }}
-            className="mb-16 text-center"
+            className="mb-16"
           >
             <SectionBadge label="OUR PROCESS" />
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-brand-navy leading-tight">
@@ -780,57 +796,68 @@ export default function DesignFinal() {
             </h2>
           </motion.div>
 
-          {/* Timeline container */}
-          <div className="relative">
-            {/* Vertical line — desktop */}
-            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-brand-gray -translate-x-1/2">
-              <motion.div
-                style={{ scaleY: lineScaleY, transformOrigin: 'top' }}
-                className="w-full h-full bg-brand-primary"
-              />
-            </div>
-            {/* Vertical line — mobile */}
-            <div className="md:hidden absolute left-4 top-0 bottom-0 w-0.5 bg-brand-gray">
-              <motion.div
-                style={{ scaleY: lineScaleY, transformOrigin: 'top' }}
-                className="w-full h-full bg-brand-primary"
-              />
-            </div>
-
-            <div className="space-y-16 md:space-y-24">
-              {processSteps.map((step, i) => {
-                const isLeft = i % 2 === 0;
-                return (
-                  <div key={step.num} className="relative">
-                    {/* Number badge */}
-                    <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-brand-primary text-white flex items-center justify-center text-sm font-bold z-10 shadow-md">
+          <div className="grid md:grid-cols-2 gap-0 min-h-[550px]">
+            {/* Left: Step navigator */}
+            <div className="flex flex-col">
+              {processSteps.map((step, i) => (
+                <button
+                  key={step.num}
+                  onClick={() => setActiveProcessStep(i)}
+                  className={`w-full text-left px-6 md:px-8 py-5 md:py-6 border-l-4 transition-all duration-300 cursor-pointer
+                    ${activeProcessStep === i
+                      ? 'border-brand-primary bg-brand-tint/50'
+                      : 'border-transparent hover:bg-gray-50'
+                    }
+                  `}
+                >
+                  <div className="flex items-start gap-5">
+                    <span className={`text-4xl md:text-5xl font-extrabold tracking-tighter transition-colors duration-300 leading-none
+                      ${activeProcessStep === i ? 'text-brand-primary' : 'text-brand-gray'}`}>
                       {step.num}
+                    </span>
+                    <div className="pt-1">
+                      <h3 className={`text-lg md:text-xl font-bold tracking-tight transition-colors
+                        ${activeProcessStep === i ? 'text-brand-navy' : 'text-brand-muted'}`}>
+                        {step.title}
+                      </h3>
+                      {activeProcessStep === i && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 5 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.25 }}
+                        >
+                          <p className="text-brand-muted mt-2 text-sm leading-relaxed max-w-sm">{step.desc}</p>
+                          <span className="inline-block mt-3 text-xs font-semibold text-brand-primary tracking-wider uppercase">
+                            {step.duration}
+                          </span>
+                        </motion.div>
+                      )}
                     </div>
-
-                    {/* Card */}
-                    <motion.div
-                      initial={{ opacity: 0, x: isLeft ? -40 : 40 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                      className={`ml-14 md:ml-0 md:w-[calc(50%-3rem)] ${
-                        isLeft ? 'md:mr-auto md:text-right md:pr-4' : 'md:ml-auto md:text-left md:pl-4'
-                      }`}
-                    >
-                      <div className="bg-white rounded-2xl shadow-sm border border-brand-gray p-6 md:p-8 text-left">
-                        <div className="w-10 h-10 rounded-xl bg-brand-tint flex items-center justify-center text-brand-primary mb-4">
-                          <HugeiconsIcon icon={step.icon} size={20} />
-                        </div>
-                        <h3 className="text-xl font-bold tracking-tight text-brand-navy mb-2">{step.title}</h3>
-                        <p className="text-brand-muted text-sm leading-relaxed mb-3">{step.desc}</p>
-                        <span className="text-xs font-semibold text-brand-primary tracking-wider uppercase">
-                          {step.duration}
-                        </span>
-                      </div>
-                    </motion.div>
                   </div>
-                );
-              })}
+                </button>
+              ))}
+            </div>
+
+            {/* Right: Large image placeholder */}
+            <div className="hidden md:block relative bg-brand-tint rounded-3xl overflow-hidden min-h-[500px]">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeProcessStep}
+                  initial={{ opacity: 0, scale: 1.03 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.97 }}
+                  transition={{ duration: 0.4 }}
+                  className="absolute inset-0 flex items-center justify-center p-8"
+                >
+                  <div className="w-full h-full bg-white/60 rounded-2xl flex flex-col items-center justify-center shadow-inner">
+                    <div className="w-16 h-16 rounded-2xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-4">
+                      <span className="text-3xl font-extrabold">{processSteps[activeProcessStep].num}</span>
+                    </div>
+                    <span className="text-brand-navy font-bold text-xl mb-2">{processSteps[activeProcessStep].title}</span>
+                    <span className="text-brand-muted text-sm">Visual placeholder</span>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             </div>
           </div>
         </div>
@@ -850,7 +877,6 @@ export default function DesignFinal() {
             <SectionBadge label="CASE STUDY" light />
           </motion.div>
 
-          {/* Image placeholder */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -871,7 +897,6 @@ export default function DesignFinal() {
             A state court system that hadn't updated since 2003.
           </motion.h2>
 
-          {/* Metrics with count-up */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
             <div>
               <div className="text-4xl md:text-5xl font-bold text-brand-sky">
@@ -923,7 +948,6 @@ export default function DesignFinal() {
       <section id="book" className="bg-[#F8FAFC] py-24 md:py-32">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-16 items-center">
-            {/* Left */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -953,7 +977,6 @@ export default function DesignFinal() {
               </div>
             </motion.div>
 
-            {/* Right — Calendar */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -967,62 +990,55 @@ export default function DesignFinal() {
       </section>
 
 
-      {/* === 9. Testimonials — Dark quote spotlight === */}
+      {/* === 9. Testimonials — Dual-row marquee === */}
       <section className="bg-brand-navy text-white py-24 md:py-32 overflow-hidden">
-        <div className="max-w-4xl mx-auto px-6 text-center relative">
-          {/* Decorative quote mark */}
-          <div className="text-8xl md:text-9xl font-bold text-brand-primary/20 leading-none select-none mb-4">
-            <HugeiconsIcon icon={QuoteDownIcon} size={100} />
-          </div>
+        <div className="max-w-5xl mx-auto px-6 mb-14">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.6 }}
+          >
+            <SectionBadge label="TESTIMONIALS" light />
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight leading-tight">
+              What our clients say
+            </h2>
+          </motion.div>
+        </div>
 
-          {/* Quote */}
-          <div className="min-h-[200px] flex items-center justify-center">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTestimonial}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+        {/* Row 1 — scrolls left */}
+        <div className="mb-6 overflow-hidden mask-edges">
+          <div className="flex animate-marquee" style={{ width: 'max-content' }}>
+            {[...testimonials, ...testimonials].map((t, i) => (
+              <div
+                key={`row1-${i}`}
+                className="shrink-0 w-[420px] mx-3 p-8 rounded-2xl bg-white/[0.05] border border-white/[0.08] backdrop-blur-sm"
               >
-                <p className="text-2xl md:text-3xl font-light leading-relaxed mb-8">
-                  "{testimonials[activeTestimonial].quote}"
-                </p>
+                <p className="text-white/80 leading-relaxed mb-6 text-[15px]">"{t.quote}"</p>
                 <div>
-                  <div className="font-semibold text-white">{testimonials[activeTestimonial].name}</div>
-                  <div className="text-sm text-white/50 mt-1">{testimonials[activeTestimonial].company}</div>
+                  <div className="font-semibold text-white text-sm">{t.name}</div>
+                  <div className="text-white/40 text-xs mt-0.5">{t.company}</div>
                 </div>
-              </motion.div>
-            </AnimatePresence>
+              </div>
+            ))}
           </div>
+        </div>
 
-          {/* Navigation */}
-          <div className="flex items-center justify-center gap-4 mt-10">
-            <button
-              onClick={() => setActiveTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
-              className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/60 hover:text-white hover:border-white/40 transition-colors"
-            >
-              <HugeiconsIcon icon={ArrowLeft01Icon} size={18} />
-            </button>
-
-            <div className="flex gap-2">
-              {testimonials.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setActiveTestimonial(i)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    i === activeTestimonial ? 'bg-brand-primary w-6' : 'bg-white/30 hover:bg-white/50'
-                  }`}
-                />
-              ))}
-            </div>
-
-            <button
-              onClick={() => setActiveTestimonial((prev) => (prev + 1) % testimonials.length)}
-              className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/60 hover:text-white hover:border-white/40 transition-colors"
-            >
-              <HugeiconsIcon icon={ArrowRight01Icon} size={18} />
-            </button>
+        {/* Row 2 — scrolls right */}
+        <div className="overflow-hidden mask-edges">
+          <div className="flex animate-marquee-reverse" style={{ width: 'max-content' }}>
+            {[...testimonials.slice(3), ...testimonials.slice(0, 3), ...testimonials.slice(3), ...testimonials.slice(0, 3)].map((t, i) => (
+              <div
+                key={`row2-${i}`}
+                className="shrink-0 w-[380px] mx-3 p-8 rounded-2xl bg-white/[0.05] border border-white/[0.08] backdrop-blur-sm"
+              >
+                <p className="text-white/80 leading-relaxed mb-6 text-[15px]">"{t.quote}"</p>
+                <div>
+                  <div className="font-semibold text-white text-sm">{t.name}</div>
+                  <div className="text-white/40 text-xs mt-0.5">{t.company}</div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -1067,7 +1083,6 @@ export default function DesignFinal() {
       <footer className="bg-[#F8FAFC] border-t border-brand-gray">
         <div className="max-w-7xl mx-auto px-6 pt-16 pb-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-12 mb-12">
-            {/* Logo + tagline */}
             <div className="col-span-2 md:col-span-1">
               <a href="#" className="inline-block mb-4">
                 <img src="/azul-arc-logo.png" alt="Azul Arc" className="h-10 w-auto" />
@@ -1080,7 +1095,6 @@ export default function DesignFinal() {
               </a>
             </div>
 
-            {/* Services */}
             <div>
               <div className="text-xs font-semibold tracking-[0.15em] uppercase text-brand-muted mb-4">
                 Services
@@ -1094,7 +1108,6 @@ export default function DesignFinal() {
               </ul>
             </div>
 
-            {/* Company */}
             <div>
               <div className="text-xs font-semibold tracking-[0.15em] uppercase text-brand-muted mb-4">
                 Company
@@ -1108,7 +1121,6 @@ export default function DesignFinal() {
               </ul>
             </div>
 
-            {/* Connect */}
             <div>
               <div className="text-xs font-semibold tracking-[0.15em] uppercase text-brand-muted mb-4">
                 Connect
@@ -1133,7 +1145,6 @@ export default function DesignFinal() {
             </div>
           </div>
 
-          {/* Newsletter */}
           <div className="border-t border-brand-gray pt-8 mb-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 max-w-md">
               <span className="text-sm font-medium text-brand-navy shrink-0">Stay in the loop</span>
@@ -1150,7 +1161,6 @@ export default function DesignFinal() {
             </div>
           </div>
 
-          {/* Copyright */}
           <div className="border-t border-brand-gray pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-xs text-brand-muted">
               &copy; {new Date().getFullYear()} Azul Arc. All rights reserved.
