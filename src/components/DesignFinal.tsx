@@ -1,52 +1,52 @@
-import { ArrowRight, ArrowUpRight, Terminal, GridFour, ChartBar, List, X, CaretDown, LinkedinLogo, XLogo, EnvelopeSimple, Monitor, Database, FlowArrow, Stack, HardDrives, Code, MagnifyingGlass, FileCode, Rocket, Headset, Quotes } from '@phosphor-icons/react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import {
+  ArrowRight01Icon,
+  ArrowUpRight01Icon,
+  ComputerTerminal01Icon,
+  GridViewIcon,
+  ChartBarLineIcon,
+  Hamburger01Icon,
+  Cancel01Icon,
+  Linkedin01Icon,
+  NewTwitterIcon,
+  Mail01Icon,
+  ComputerIcon,
+  DatabaseIcon,
+  FlowIcon,
+  Layers01Icon,
+  ServerStack01Icon,
+  CodeIcon,
+  Search01Icon,
+  SourceCodeIcon,
+  RocketIcon,
+  HeadsetIcon,
+  QuoteDownIcon,
+} from '@hugeicons/core-free-icons';
 import { motion, AnimatePresence } from 'motion/react';
 import { useState } from 'react';
-import { MeshGradient } from '@paper-design/shaders-react';
 
 // --- Animation Variants ---
 const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
 };
 
 const staggerContainer = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.15 }
+    transition: { staggerChildren: 0.1 }
   }
 };
 
-// --- Hero Background Component ---
-const HeroBackground = () => (
-  <div className="absolute inset-0 overflow-hidden">
-    <MeshGradient
-      speed={0.6}
-      colors={['#e0eaff', '#9ecdff', '#f5faff', '#ebf9ff']}
-      distortion={0.83}
-      swirl={0}
-      grainMixer={0.25}
-      grainOverlay={0}
-      fit="contain"
-      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
-    />
-  </div>
-);
-
 // --- Nav Data ---
 const navLinks = [
-  { label: 'Who We Serve', href: '#who-we-serve', hasDropdown: true },
+  { label: 'Who We Serve', href: '#who-we-serve' },
   { label: 'Capabilities', href: '#capabilities' },
   { label: 'How We Work', href: '#process' },
   { label: 'Case Studies', href: '#case-study' },
   { label: 'Pricing', href: '#pricing' },
   { label: 'About', href: '#' },
-];
-
-const segments = [
-  { label: 'Court Systems', href: '#who-we-serve', desc: 'GovTech & judicial modernization' },
-  { label: 'Product Manufacturers', href: '#who-we-serve', desc: 'Sales tools & commercial platforms' },
-  { label: 'Growth-Stage SMBs', href: '#who-we-serve', desc: 'Scaling operations & legacy replacement' },
 ];
 
 // --- Challenge Data ---
@@ -57,11 +57,7 @@ const challenges = [
     prob: "Legacy systems slowing down your agency?",
     cta: "See How We Modernize Public Systems",
     desc: "State agencies run on software built decades ago. We replace fragile legacy systems with secure, modern platforms — without disrupting daily operations. Our CaseHub project cut case processing time by 40% for a state court system serving 2M+ residents.",
-    icon: <Terminal size={20} weight="duotone" />,
-    accentBg: "bg-brand-blue/10",
-    accentBorder: "border-brand-blue/30",
-    accentText: "text-brand-blue",
-    accentIcon: "text-brand-blue",
+    icon: ComputerTerminal01Icon,
   },
   {
     id: 1,
@@ -69,11 +65,7 @@ const challenges = [
     prob: "Your sales team can't see the full picture?",
     cta: "See How We Build Visibility",
     desc: "When product catalogs live in spreadsheets and pricing changes take weeks, revenue leaks. We build digital product platforms that give your sales team real-time inventory, dynamic pricing, and customer analytics — so they close faster.",
-    icon: <GridFour size={20} weight="duotone" />,
-    accentBg: "bg-brand-orange/10",
-    accentBorder: "border-brand-orange/30",
-    accentText: "text-brand-orange",
-    accentIcon: "text-brand-orange",
+    icon: GridViewIcon,
   },
   {
     id: 2,
@@ -81,53 +73,49 @@ const challenges = [
     prob: "Manual processes killing your margins?",
     cta: "See How We Automate Operations",
     desc: "You've grown past what spreadsheets and workarounds can handle, but you're not ready for a 50-person IT department. We automate the operational bottlenecks — approvals, reporting, data entry — that are eating your margins and capping your growth.",
-    icon: <ChartBar size={20} weight="duotone" />,
-    accentBg: "bg-emerald-500/10",
-    accentBorder: "border-emerald-500/30",
-    accentText: "text-emerald-600",
-    accentIcon: "text-emerald-500",
+    icon: ChartBarLineIcon,
   }
 ];
 
 // --- Capabilities Data ---
 const capabilities = [
   {
-    icon: <Monitor size={24} weight="duotone" />,
+    icon: ComputerIcon,
     title: "Custom Platforms",
     desc: "Purpose-built applications designed around how your team actually works — not how a vendor thinks you should.",
   },
   {
-    icon: <Database size={24} weight="duotone" />,
+    icon: DatabaseIcon,
     title: "Data & Analytics",
     desc: "Dashboards and reporting that surface real-time insights, not last month's spreadsheet.",
   },
   {
-    icon: <Stack size={24} weight="duotone" />,
+    icon: Layers01Icon,
     title: "System Integrations",
     desc: "Connect your ERP, CRM, and operational tools into a single source of truth.",
   },
   {
-    icon: <FlowArrow size={24} weight="duotone" />,
+    icon: FlowIcon,
     title: "Workflow Automation",
     desc: "Eliminate manual approvals, data entry, and reporting that slow your team down.",
   },
   {
-    icon: <HardDrives size={24} weight="duotone" />,
+    icon: ServerStack01Icon,
     title: "Legacy Modernization",
     desc: "Migrate off decades-old systems without disrupting daily operations or losing data.",
   },
   {
-    icon: <Code size={24} weight="duotone" />,
+    icon: CodeIcon,
     title: "API & Cloud Infrastructure",
     desc: "Scalable backends, secure APIs, and cloud architecture built for reliability.",
   },
   {
-    icon: <Monitor size={24} weight="duotone" />,
+    icon: ComputerIcon,
     title: "UX & Product Design",
     desc: "Research-driven interfaces that your team will actually want to use every day.",
   },
   {
-    icon: <Database size={24} weight="duotone" />,
+    icon: DatabaseIcon,
     title: "Mobile Applications",
     desc: "Native and cross-platform apps that bring your operations into the field.",
   },
@@ -139,35 +127,35 @@ const processSteps = [
     num: "01",
     title: "Discover",
     desc: "We map your operations, interview stakeholders, and identify the highest-leverage opportunities for impact.",
-    icon: <MagnifyingGlass size={20} weight="duotone" />,
+    icon: Search01Icon,
     duration: "2–3 weeks",
   },
   {
     num: "02",
     title: "Blueprint",
     desc: "A detailed technical plan with architecture decisions, timeline, and guaranteed ROI projections.",
-    icon: <FileCode size={20} weight="duotone" />,
+    icon: SourceCodeIcon,
     duration: "2–3 weeks",
   },
   {
     num: "03",
     title: "Design & Build",
     desc: "Agile sprints with milestone demos. You see working software every two weeks — not slide decks.",
-    icon: <Code size={20} weight="duotone" />,
+    icon: CodeIcon,
     duration: "3–9 months",
   },
   {
     num: "04",
     title: "Deploy",
     desc: "Phased rollouts, data migration, and hands-on training so adoption happens on day one.",
-    icon: <Rocket size={20} weight="duotone" />,
+    icon: RocketIcon,
     duration: "2–4 weeks",
   },
   {
     num: "05",
     title: "Evolve",
     desc: "Ongoing maintenance, performance monitoring, and iterative improvements as your needs grow.",
-    icon: <Headset size={20} weight="duotone" />,
+    icon: HeadsetIcon,
     duration: "Ongoing",
   },
 ];
@@ -206,55 +194,33 @@ const testimonials = [
   },
 ];
 
+// --- Section Badge Component ---
+function SectionBadge({ label }: { label: string }) {
+  return (
+    <div className="flex items-center gap-2 mb-4">
+      <span className="text-brand-primary">&#10022;</span>
+      <span className="text-xs font-semibold tracking-[0.2em] uppercase text-brand-primary">{label}</span>
+    </div>
+  );
+}
 
 // --- Main Component ---
 export default function DesignFinal() {
-  const [activeCard, setActiveCard] = useState<number | null>(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [serveDropdownOpen, setServeDropdownOpen] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
 
-
   return (
-    <div className="bg-[#fafafa] text-zinc-900 font-sans min-h-screen relative overflow-hidden selection:bg-brand-blue selection:text-white">
-
-      {/* === Global Background Layers === */}
-
-      {/* Noise Texture */}
-      <svg className="fixed inset-0 w-full h-full opacity-[0.04] pointer-events-none z-[60] mix-blend-multiply" xmlns="http://www.w3.org/2000/svg">
-        <filter id="noiseFilterFinal">
-          <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/>
-        </filter>
-        <rect width="100%" height="100%" filter="url(#noiseFilterFinal)"/>
-      </svg>
-
-      {/* Blueprint Grid */}
-      <div className="fixed inset-0 bg-[linear-gradient(to_right,#0000000a_1px,transparent_1px),linear-gradient(to_bottom,#0000000a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none -z-10" />
-
-      {/* Ambient Gradient Blobs */}
-      <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
-        <motion.div
-          animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.3, 0.15], x: ['-5%', '5%', '-5%'] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-brand-blue/10 rounded-full blur-[120px]"
-        />
-        <motion.div
-          animate={{ scale: [1, 1.3, 1], opacity: [0.1, 0.25, 0.1], y: ['-5%', '5%', '-5%'] }}
-          transition={{ duration: 25, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-          className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-brand-dark/8 rounded-full blur-[150px]"
-        />
-      </div>
-
+    <div className="bg-white text-brand-dark font-sans min-h-screen relative overflow-hidden selection:bg-brand-primary selection:text-white">
 
       {/* === 1. Navigation === */}
-      <header className="fixed top-0 left-0 right-0 z-40 bg-white/60 backdrop-blur-xl border-b border-zinc-200/50">
+      <header className="fixed top-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-xl border-b border-brand-gray">
         <div className="px-6 lg:px-8 py-3 flex justify-between items-center max-w-7xl mx-auto">
           {/* Logo */}
           <motion.a
             href="#"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
             className="shrink-0"
           >
             <img src="/azul-arc-logo.png" alt="Azul Arc" className="h-10 w-auto" />
@@ -264,36 +230,17 @@ export default function DesignFinal() {
           <motion.nav
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             className="hidden lg:flex items-center gap-1"
           >
             {navLinks.map((link) => (
-              <div key={link.label} className="relative group">
-                <a
-                  href={link.href}
-                  className="px-3 py-2 text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors flex items-center gap-1"
-                >
-                  {link.label}
-                  {link.hasDropdown && <CaretDown size={14} weight="duotone" className="text-zinc-400 group-hover:text-zinc-600 transition-colors" />}
-                </a>
-
-                {link.hasDropdown && (
-                  <div className="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                    <div className="bg-white/90 backdrop-blur-xl rounded-xl border border-zinc-200/60 shadow-xl shadow-zinc-200/40 p-2 min-w-[280px]">
-                      {segments.map((seg) => (
-                        <a
-                          key={seg.label}
-                          href={seg.href}
-                          className="flex flex-col gap-0.5 px-4 py-3 rounded-lg hover:bg-zinc-50 transition-colors"
-                        >
-                          <span className="text-sm font-medium text-zinc-900">{seg.label}</span>
-                          <span className="text-xs text-zinc-500">{seg.desc}</span>
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
+              <a
+                key={link.label}
+                href={link.href}
+                className="px-3 py-2 text-sm font-medium text-brand-muted hover:text-brand-dark transition-colors"
+              >
+                {link.label}
+              </a>
             ))}
           </motion.nav>
 
@@ -303,17 +250,20 @@ export default function DesignFinal() {
               href="#pricing"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="hidden lg:flex bg-zinc-900 text-white px-5 py-2.5 rounded-full text-sm font-medium items-center gap-2 hover:bg-zinc-800 transition-colors hover:scale-[1.03] active:scale-[0.97]"
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="hidden lg:flex bg-brand-primary text-white px-6 py-2.5 rounded-full text-sm font-medium items-center gap-2 hover:bg-brand-navy transition-colors"
             >
-              Get Started <ArrowRight size={16} weight="duotone" />
+              Get Started <HugeiconsIcon icon={ArrowRight01Icon} size={16} />
             </motion.a>
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 text-zinc-700 hover:text-zinc-900 transition-colors"
+              className="lg:hidden p-2 text-brand-muted hover:text-brand-dark transition-colors"
             >
-              {mobileMenuOpen ? <X size={24} weight="duotone" /> : <List size={24} weight="duotone" />}
+              {mobileMenuOpen
+                ? <HugeiconsIcon icon={Cancel01Icon} size={24} />
+                : <HugeiconsIcon icon={Hamburger01Icon} size={24} />
+              }
             </button>
           </div>
         </div>
@@ -326,48 +276,22 @@ export default function DesignFinal() {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:hidden border-t border-zinc-200/50 bg-white/90 backdrop-blur-xl overflow-hidden"
+              className="lg:hidden border-t border-brand-gray bg-white/90 backdrop-blur-xl overflow-hidden"
             >
               <div className="px-6 py-4 flex flex-col gap-1">
                 {navLinks.map((link) => (
-                  <div key={link.label}>
-                    {link.hasDropdown ? (
-                      <>
-                        <button
-                          onClick={() => setServeDropdownOpen(!serveDropdownOpen)}
-                          className="w-full flex items-center justify-between px-3 py-3 text-base font-medium text-zinc-700 hover:text-zinc-900 transition-colors"
-                        >
-                          {link.label}
-                          <CaretDown size={16} weight="duotone" className={`text-zinc-400 transition-transform ${serveDropdownOpen ? 'rotate-180' : ''}`} />
-                        </button>
-                        <AnimatePresence>
-                          {serveDropdownOpen && (
-                            <motion.div
-                              initial={{ opacity: 0, height: 0 }}
-                              animate={{ opacity: 1, height: "auto" }}
-                              exit={{ opacity: 0, height: 0 }}
-                              transition={{ duration: 0.2 }}
-                              className="pl-4 overflow-hidden"
-                            >
-                              {segments.map((seg) => (
-                                <a key={seg.label} href={seg.href} className="block px-3 py-2.5 text-sm text-zinc-600 hover:text-zinc-900 transition-colors">
-                                  {seg.label}
-                                </a>
-                              ))}
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </>
-                    ) : (
-                      <a href={link.href} className="block px-3 py-3 text-base font-medium text-zinc-700 hover:text-zinc-900 transition-colors">
-                        {link.label}
-                      </a>
-                    )}
-                  </div>
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    className="block px-3 py-3 text-base font-medium text-brand-muted hover:text-brand-dark transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {link.label}
+                  </a>
                 ))}
-                <div className="pt-3 mt-2 border-t border-zinc-200/60">
-                  <a href="#pricing" className="w-full bg-zinc-900 text-white px-6 py-3 rounded-full text-sm font-medium flex items-center justify-center gap-2 hover:bg-zinc-800 transition-colors">
-                    Get Started <ArrowRight size={16} weight="duotone" />
+                <div className="pt-3 mt-2 border-t border-brand-gray">
+                  <a href="#pricing" className="w-full bg-brand-primary text-white px-6 py-3 rounded-full text-sm font-medium flex items-center justify-center gap-2 hover:bg-brand-navy transition-colors">
+                    Get Started <HugeiconsIcon icon={ArrowRight01Icon} size={16} />
                   </a>
                 </div>
               </div>
@@ -378,347 +302,303 @@ export default function DesignFinal() {
 
 
       {/* === 2. Hero === */}
-      <section className="relative z-10 min-h-[90vh] flex items-center overflow-hidden">
-        {/* Tweakable Background */}
-        <div className="absolute inset-0 z-0">
-          <HeroBackground />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-8 pt-32 pb-20 relative z-10 w-full">
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            animate="visible"
-            className="max-w-5xl"
-          >
-            <motion.h1
-              variants={fadeUp}
-              className="text-[2.75rem] sm:text-[4rem] md:text-[5.5rem] lg:text-[7rem] font-display font-medium tracking-tighter leading-[0.9] mb-10"
+      <section className="min-h-[85vh] flex items-center bg-white">
+        <div className="max-w-7xl mx-auto px-6 pt-32 pb-20 w-full">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Left */}
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              animate="visible"
             >
-              We build the software<br/>
-              that{' '}
-              <span className="inline-block bg-brand-blue/10 text-brand-blue px-3 md:px-5 py-0.5 md:py-1 rounded-xl md:rounded-2xl border border-brand-blue/20">
-                runs
-              </span>
-              {' '}your business.
-            </motion.h1>
+              <motion.div variants={fadeUp}>
+                <SectionBadge label="WEB PARTNER OF CHOICE" />
+              </motion.div>
 
-            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-8 items-start sm:items-center">
-              <p className="text-xl md:text-2xl text-zinc-500 max-w-lg font-light leading-relaxed">
-                Custom platforms for mid-market companies ready to replace legacy systems and scale without the bloat.
-              </p>
-              <motion.a
-                href="#who-we-serve"
-                whileHover={{ scale: 1.03, y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                className="bg-zinc-900 text-white px-8 py-4 rounded-full font-medium flex items-center gap-2.5 hover:bg-zinc-800 transition-colors text-lg shadow-lg shadow-zinc-900/10 shrink-0"
+              <motion.h1
+                variants={fadeUp}
+                className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-brand-navy leading-tight mb-6"
               >
-                Book a Discovery Call <ArrowRight size={20} weight="duotone" />
-              </motion.a>
+                We build the software that{' '}
+                <span className="font-serif italic text-brand-primary">runs</span>{' '}
+                your business.
+              </motion.h1>
+
+              <motion.p
+                variants={fadeUp}
+                className="text-lg text-brand-muted max-w-lg leading-relaxed mb-8"
+              >
+                Custom platforms for mid-market companies ready to replace legacy systems and scale without the bloat.
+              </motion.p>
+
+              <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4 mb-10">
+                <a
+                  href="#who-we-serve"
+                  className="bg-brand-primary text-white rounded-full px-6 py-3 font-medium hover:bg-brand-navy transition-colors inline-flex items-center gap-2 justify-center"
+                >
+                  Book a Discovery Call <HugeiconsIcon icon={ArrowRight01Icon} size={18} />
+                </a>
+                <a
+                  href="#capabilities"
+                  className="border border-brand-primary text-brand-primary rounded-full px-6 py-3 font-medium hover:bg-brand-primary hover:text-white transition-colors inline-flex items-center gap-2 justify-center"
+                >
+                  See Our Work <HugeiconsIcon icon={ArrowUpRight01Icon} size={18} />
+                </a>
+              </motion.div>
+
+              <motion.div variants={fadeUp} className="flex gap-8">
+                <div>
+                  <div className="text-2xl md:text-3xl font-bold text-brand-navy">80%</div>
+                  <div className="text-sm text-brand-muted mt-1">Faster Processing</div>
+                </div>
+                <div className="w-px bg-brand-gray" />
+                <div>
+                  <div className="text-2xl md:text-3xl font-bold text-brand-navy">99%</div>
+                  <div className="text-sm text-brand-muted mt-1">Client Satisfaction</div>
+                </div>
+              </motion.div>
+            </motion.div>
+
+            {/* Right — Placeholder */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="bg-brand-tint rounded-2xl aspect-[4/3] flex items-center justify-center"
+            >
+              <span className="text-brand-muted text-sm">Photography placeholder</span>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* === 3. Positioning Statement === */}
+      <section className="bg-[#F8FAFC] py-24 md:py-32">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="text-center"
+          >
+            <motion.div variants={fadeUp} className="flex items-center gap-2 mb-4 justify-center">
+              <span className="text-brand-primary">&#10022;</span>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-brand-primary">ABOUT US</span>
+            </motion.div>
+
+            <motion.p
+              variants={fadeUp}
+              className="text-3xl md:text-4xl font-medium text-brand-navy max-w-4xl mx-auto leading-relaxed"
+            >
+              We are passionate about empowering mid-market companies to take control of their operations and achieve their{' '}
+              <span className="font-serif italic">growth</span>{' '}goals.
+            </motion.p>
+
+            <motion.div variants={fadeUp} className="flex gap-6 justify-center mt-12">
+              {[1, 2, 3].map((i) => (
+                <div
+                  key={i}
+                  className="bg-brand-tint rounded-xl h-48 w-48 flex items-center justify-center hidden md:flex"
+                >
+                  <span className="text-brand-muted text-xs">Photo {i}</span>
+                </div>
+              ))}
             </motion.div>
           </motion.div>
         </div>
       </section>
 
 
-      {/* === 3. Logo Scroller === */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 1 }}
-        className="py-10 border-y-2 border-zinc-900 relative z-10 bg-white/40 backdrop-blur-sm"
-      >
-        <div className="max-w-7xl mx-auto px-8 flex items-center gap-12">
-          <div className="text-xs font-mono text-zinc-500 tracking-widest shrink-0 uppercase">
-            Trusted By
-          </div>
-          <div className="overflow-hidden mask-edges w-full">
-            <div className="flex gap-20 items-center animate-marquee whitespace-nowrap opacity-40 grayscale">
-              {[1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8].map((i, idx) => (
-                <div key={idx} className="text-2xl font-bold tracking-tighter shrink-0">
-                  COMPANY {i}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </motion.section>
-
-
-      {/* === 4. Who We Serve — Accordion === */}
-      <section id="who-we-serve" className="max-w-7xl mx-auto px-8 py-28 relative z-10">
-        <div className="flex flex-col lg:flex-row gap-16 items-start">
-          {/* Sticky left sidebar */}
-          <div className="lg:w-1/3 lg:sticky lg:top-32">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className="text-xs font-mono text-zinc-400 tracking-widest uppercase mb-4">
-                Who We Serve
-              </div>
-              <h2 className="text-4xl md:text-5xl font-display font-medium tracking-tighter mb-6 leading-[0.95]">
-                We've seen this<br/>problem before.
-              </h2>
-              <p className="text-lg text-zinc-500 font-light leading-relaxed">
-                Different industries, same pattern — smart teams held back by software that can't keep up.
-              </p>
+      {/* === 4. Who We Serve === */}
+      <section id="who-we-serve" className="py-24 md:py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="mb-16"
+          >
+            <motion.div variants={fadeUp}>
+              <SectionBadge label="WHO WE SERVE" />
             </motion.div>
-          </div>
+            <motion.h2
+              variants={fadeUp}
+              className="text-4xl md:text-5xl font-semibold tracking-tight text-brand-navy leading-tight mb-6"
+            >
+              Industries we{' '}
+              <span className="font-serif italic">serve</span>
+            </motion.h2>
+            <motion.p variants={fadeUp} className="text-lg text-brand-muted max-w-2xl leading-relaxed">
+              Different industries, same pattern — smart teams held back by software that can't keep up.
+            </motion.p>
+          </motion.div>
 
-          {/* Accordion cards */}
-          <div className="lg:w-2/3 flex flex-col gap-3 w-full">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="grid md:grid-cols-3 gap-6 mb-12"
+          >
             {challenges.map((card) => (
-              <div
+              <motion.div
                 key={card.id}
-                className={`bg-white/70 backdrop-blur-xl rounded-2xl overflow-hidden border transition-all duration-300 ${
-                  activeCard === card.id
-                    ? `${card.accentBorder} shadow-lg`
-                    : 'border-zinc-200/60 hover:border-zinc-300 shadow-sm'
-                }`}
+                variants={fadeUp}
+                className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 p-8"
               >
-                <div
-                  onClick={() => setActiveCard(activeCard === card.id ? null : card.id)}
-                  className="p-6 md:p-8 flex items-center justify-between gap-4 md:gap-6 cursor-pointer"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
-                      activeCard === card.id ? card.accentBg : 'bg-zinc-100'
-                    }`}>
-                      <span className={`transition-colors ${activeCard === card.id ? card.accentIcon : 'text-zinc-400'}`}>
-                        {card.icon}
-                      </span>
-                    </div>
-                    <div>
-                      <div className="text-[10px] font-mono text-zinc-400 tracking-widest uppercase mb-1">
-                        {card.label}
-                      </div>
-                      <h3 className="text-lg md:text-2xl font-medium tracking-tight leading-tight">
-                        {card.prob}
-                      </h3>
-                    </div>
-                  </div>
-                  <motion.div
-                    animate={{ rotate: activeCard === card.id ? 45 : 0 }}
-                    transition={{ duration: 0.3 }}
-                    className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-colors ${
-                      activeCard === card.id ? 'bg-zinc-900 text-white' : 'bg-zinc-100 text-zinc-400'
-                    }`}
-                  >
-                    <ArrowRight size={20} weight="duotone" />
-                  </motion.div>
+                <div className="w-12 h-12 rounded-xl bg-brand-tint flex items-center justify-center mb-5 text-brand-primary">
+                  <HugeiconsIcon icon={card.icon} size={24} />
                 </div>
-
-                <AnimatePresence initial={false}>
-                  {activeCard === card.id && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ height: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }, opacity: { duration: 0.25, delay: 0.1 } }}
-                      className="overflow-hidden"
-                    >
-                      <div className="px-6 md:px-8 pb-8">
-                        <div className="pt-6 border-t border-zinc-200/60">
-                          <p className="text-lg text-zinc-600 font-light leading-relaxed mb-6 max-w-xl">
-                            {card.desc}
-                          </p>
-                          <a
-                            href="#"
-                            onClick={(e) => e.stopPropagation()}
-                            className={`${card.accentText} font-medium inline-flex items-center gap-2 text-sm uppercase tracking-wider hover:opacity-70 transition-opacity`}
-                          >
-                            {card.cta} <ArrowUpRight size={16} weight="duotone" />
-                          </a>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
+                <div className="text-xs font-semibold tracking-[0.15em] uppercase text-brand-muted mb-2">
+                  {card.label}
+                </div>
+                <h3 className="text-xl font-semibold tracking-tight text-brand-navy mb-3 leading-snug">
+                  {card.prob}
+                </h3>
+                <p className="text-brand-muted text-sm leading-relaxed mb-4">
+                  {card.desc}
+                </p>
+                <a
+                  href="#"
+                  className="text-brand-primary font-medium text-sm inline-flex items-center gap-1 hover:opacity-80 transition-opacity"
+                >
+                  Learn more <HugeiconsIcon icon={ArrowRight01Icon} size={14} />
+                </a>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            className="text-center"
+          >
+            <a
+              href="#"
+              className="bg-brand-primary text-white rounded-full px-6 py-3 font-medium hover:bg-brand-navy transition-colors inline-flex items-center gap-2"
+            >
+              See All Industries <HugeiconsIcon icon={ArrowRight01Icon} size={18} />
+            </a>
+          </motion.div>
         </div>
       </section>
 
 
-      {/* === 5. Featured Case Study === */}
-      <section id="case-study" className="bg-zinc-950 text-white py-24 md:py-32 relative z-10 overflow-hidden">
-        <motion.div
-          animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.25, 0.15] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-brand-blue/15 rounded-full blur-[150px] pointer-events-none"
-        />
-
-        <div className="max-w-7xl mx-auto px-8 relative z-10">
-          <div className="text-xs font-mono text-brand-light mb-8 tracking-widest uppercase">
-            Case Study — CaseHub
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+      {/* === 5. Capabilities === */}
+      <section id="capabilities" className="py-24 md:py-32 bg-[#F8FAFC]">
+        <div className="max-w-7xl mx-auto px-6">
+          {/* Top split: left text, right 3 stacked cards */}
+          <div className="grid md:grid-cols-2 gap-16 items-start mb-16">
             <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8 }}
+              variants={staggerContainer}
             >
-              <h2 className="text-4xl md:text-5xl font-display font-medium mb-8 leading-[0.95] tracking-tighter">
-                A state court system that hadn't updated since 2003.
-              </h2>
-
-              <div className="flex gap-8 mb-8">
-                <div>
-                  <div className="text-3xl md:text-4xl font-display font-medium text-brand-light">40%</div>
-                  <div className="text-xs font-mono text-zinc-500 tracking-wider uppercase mt-1">Faster Processing</div>
-                </div>
-                <div className="w-px bg-zinc-800" />
-                <div>
-                  <div className="text-3xl md:text-4xl font-display font-medium text-brand-light">Zero</div>
-                  <div className="text-xs font-mono text-zinc-500 tracking-wider uppercase mt-1">Downtime in Transition</div>
-                </div>
-              </div>
-
-              <p className="text-lg text-zinc-400 mb-10 leading-relaxed font-light">
-                We rebuilt their case management platform from the ground up — replacing a brittle legacy system with a modern, secure application — while keeping 2,000+ court staff operational throughout.
-              </p>
-              <motion.a
-                href="#"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="bg-white text-zinc-900 px-8 py-4 rounded-full font-medium hover:bg-zinc-100 transition-colors inline-flex items-center gap-2"
+              <motion.div variants={fadeUp}>
+                <SectionBadge label="CAPABILITIES" />
+              </motion.div>
+              <motion.h2
+                variants={fadeUp}
+                className="text-4xl md:text-5xl font-semibold tracking-tight text-brand-navy leading-tight mb-6"
               >
-                Read the Full Story <ArrowUpRight size={20} weight="duotone" />
-              </motion.a>
+                Core features that set us apart from the{' '}
+                <span className="font-serif italic">competition</span>
+              </motion.h2>
+              <motion.p variants={fadeUp} className="text-lg text-brand-muted leading-relaxed">
+                We're a full-service digital product agency. From research to production — we own the entire stack.
+              </motion.p>
             </motion.div>
 
-            {/* Stats Grid instead of SVG */}
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="grid grid-cols-2 gap-4"
+              variants={staggerContainer}
+              className="flex flex-col"
             >
-              {[
-                { value: "2M+", label: "Residents Served", color: "bg-brand-blue/20 border-brand-blue/30" },
-                { value: "2,000+", label: "Court Staff Onboarded", color: "bg-brand-light/20 border-brand-light/30" },
-                { value: "6 mo", label: "Full Deployment", color: "bg-brand-dark/20 border-brand-dark/30" },
-                { value: "99.9%", label: "Uptime SLA", color: "bg-emerald-500/20 border-emerald-500/30" },
-              ].map((stat, i) => (
+              {capabilities.slice(0, 3).map((cap, i) => (
                 <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
-                  className={`${stat.color} border rounded-2xl p-6 backdrop-blur-sm`}
+                  key={cap.title}
+                  variants={fadeUp}
+                  className={`py-6 ${i < 2 ? 'border-b border-brand-gray' : ''}`}
                 >
-                  <div className="text-3xl font-display font-medium mb-1">{stat.value}</div>
-                  <div className="text-xs font-mono text-zinc-400 tracking-wider uppercase">{stat.label}</div>
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-brand-tint flex items-center justify-center shrink-0 text-brand-primary">
+                      <HugeiconsIcon icon={cap.icon} size={20} />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold tracking-tight text-brand-navy mb-1">{cap.title}</h3>
+                      <p className="text-sm text-brand-muted leading-relaxed mb-2">{cap.desc}</p>
+                      <a
+                        href="#"
+                        className="text-brand-primary font-medium text-sm inline-flex items-center gap-1 hover:opacity-80 transition-opacity"
+                      >
+                        Learn more <HugeiconsIcon icon={ArrowRight01Icon} size={14} />
+                      </a>
+                    </div>
+                  </div>
                 </motion.div>
               ))}
             </motion.div>
           </div>
-        </div>
-      </section>
 
-
-      {/* === 6. Capabilities — Marquee === */}
-      <section id="capabilities" className="py-28 relative z-10 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-8 mb-16">
+          {/* Bottom: remaining capabilities as smaller cards */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4"
           >
-            <div className="text-xs font-mono text-zinc-400 tracking-widest uppercase mb-4">
-              Capabilities
-            </div>
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-              <h2 className="text-4xl md:text-5xl font-display font-medium tracking-tighter leading-[0.95] max-w-lg">
-                Design, engineering, and everything in between.
-              </h2>
-              <p className="text-lg text-zinc-500 font-light leading-relaxed max-w-md">
-                We're a full-service digital product agency. From research to production — we own the entire stack.
-              </p>
-            </div>
+            {capabilities.slice(3).map((cap) => (
+              <motion.div
+                key={cap.title}
+                variants={fadeUp}
+                className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 p-6"
+              >
+                <div className="w-10 h-10 rounded-xl bg-brand-tint flex items-center justify-center mb-4 text-brand-primary">
+                  <HugeiconsIcon icon={cap.icon} size={20} />
+                </div>
+                <h3 className="text-base font-semibold tracking-tight text-brand-navy mb-1">{cap.title}</h3>
+                <p className="text-sm text-brand-muted leading-relaxed">{cap.desc}</p>
+              </motion.div>
+            ))}
           </motion.div>
         </div>
-
-        {/* Scrolling marquee of capability cards */}
-        <div className="relative">
-          {/* Fade edges */}
-          <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#fafafa] to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#fafafa] to-transparent z-10 pointer-events-none" />
-
-          {/* Row 1 — scrolls left */}
-          <div className="mb-4 overflow-hidden">
-            <div className="flex gap-4 animate-marquee whitespace-nowrap">
-              {[...capabilities, ...capabilities].map((cap, idx) => (
-                <div
-                  key={idx}
-                  className="bg-white/80 backdrop-blur-xl rounded-2xl border border-zinc-200/60 p-6 min-w-[300px] max-w-[300px] shrink-0 hover:border-brand-blue/30 hover:shadow-lg hover:shadow-brand-blue/5 transition-all duration-300 group"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-zinc-100 group-hover:bg-brand-blue/10 flex items-center justify-center mb-4 transition-colors">
-                    <span className="text-zinc-400 group-hover:text-brand-blue transition-colors">
-                      {cap.icon}
-                    </span>
-                  </div>
-                  <h3 className="text-base font-medium tracking-tight mb-1.5 whitespace-normal">{cap.title}</h3>
-                  <p className="text-sm text-zinc-500 leading-relaxed whitespace-normal">{cap.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Row 2 — scrolls right (reverse) */}
-          <div className="overflow-hidden">
-            <div className="flex gap-4 animate-marquee-reverse whitespace-nowrap">
-              {[...capabilities.slice().reverse(), ...capabilities.slice().reverse()].map((cap, idx) => (
-                <div
-                  key={idx}
-                  className="bg-white/80 backdrop-blur-xl rounded-2xl border border-zinc-200/60 p-6 min-w-[300px] max-w-[300px] shrink-0 hover:border-brand-blue/30 hover:shadow-lg hover:shadow-brand-blue/5 transition-all duration-300 group"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-zinc-100 group-hover:bg-brand-blue/10 flex items-center justify-center mb-4 transition-colors">
-                    <span className="text-zinc-400 group-hover:text-brand-blue transition-colors">
-                      {cap.icon}
-                    </span>
-                  </div>
-                  <h3 className="text-base font-medium tracking-tight mb-1.5 whitespace-normal">{cap.title}</h3>
-                  <p className="text-sm text-zinc-500 leading-relaxed whitespace-normal">{cap.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
       </section>
 
 
-      {/* === 7. Process — Scroll-Triggered === */}
-      <section id="process" className="bg-zinc-950 text-white relative z-10 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-8 py-24 md:py-32">
+      {/* === 6. How We Work (Process) === */}
+      <section id="process" className="py-24 md:py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="mb-20"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="mb-16"
           >
-            <div className="text-xs font-mono text-zinc-500 tracking-widest uppercase mb-4">
-              How We Work
-            </div>
-            <h2 className="text-4xl md:text-5xl font-display font-medium tracking-tighter leading-[0.95] max-w-lg">
-              A clear path from problem to platform.
-            </h2>
+            <motion.div variants={fadeUp}>
+              <SectionBadge label="OUR PROCESS" />
+            </motion.div>
+            <motion.h2
+              variants={fadeUp}
+              className="text-4xl md:text-5xl font-semibold tracking-tight text-brand-navy leading-tight"
+            >
+              How We{' '}
+              <span className="font-serif italic">Work</span>
+            </motion.h2>
           </motion.div>
 
           <div className="grid md:grid-cols-12 gap-12 md:gap-16">
-            {/* Left: Step list (sticky) */}
-            <div className="md:col-span-5 md:sticky md:top-32 md:self-start">
+            {/* Left: Step tabs */}
+            <div className="md:col-span-5">
               <div className="flex flex-col gap-2">
                 {processSteps.map((step, i) => (
                   <motion.div
@@ -727,44 +607,44 @@ export default function DesignFinal() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: i * 0.08 }}
-                    className={`flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all duration-500 ${
+                    className={`flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all duration-300 ${
                       activeStep === i
-                        ? 'bg-white/10 border border-white/10'
-                        : 'border border-transparent hover:bg-white/5'
+                        ? 'bg-brand-tint border-l-2 border-brand-primary'
+                        : 'border-l-2 border-transparent hover:bg-brand-tint/50'
                     }`}
                     onClick={() => setActiveStep(i)}
                   >
-                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-all duration-500 ${
-                      activeStep === i ? 'bg-brand-blue text-white' : 'bg-zinc-800 text-zinc-500'
+                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-all duration-300 ${
+                      activeStep === i ? 'bg-brand-primary text-white' : 'bg-brand-tint text-brand-muted'
                     }`}>
-                      {step.icon}
+                      <HugeiconsIcon icon={step.icon} size={20} />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-3">
-                        <span className="text-xs font-mono text-zinc-600 tracking-widest">{step.num}</span>
-                        <h3 className={`text-lg font-medium tracking-tight transition-colors duration-500 ${
-                          activeStep === i ? 'text-white' : 'text-zinc-500'
+                        <span className="text-xs font-semibold text-brand-muted tracking-widest">{step.num}</span>
+                        <h3 className={`text-lg font-medium tracking-tight transition-colors duration-300 ${
+                          activeStep === i ? 'text-brand-navy' : 'text-brand-muted'
                         }`}>{step.title}</h3>
                       </div>
                     </div>
-                    <span className={`text-xs font-mono tracking-wider transition-colors duration-500 ${
-                      activeStep === i ? 'text-brand-light' : 'text-zinc-700'
+                    <span className={`text-xs font-medium tracking-wider transition-colors duration-300 ${
+                      activeStep === i ? 'text-brand-primary' : 'text-brand-muted'
                     }`}>{step.duration}</span>
                   </motion.div>
                 ))}
               </div>
 
               {/* Progress bar */}
-              <div className="mt-6 h-1 bg-zinc-800 rounded-full overflow-hidden">
+              <div className="mt-6 h-1 bg-brand-gray rounded-full overflow-hidden">
                 <motion.div
-                  className="h-full bg-brand-blue rounded-full"
+                  className="h-full bg-brand-primary rounded-full"
                   animate={{ width: `${((activeStep + 1) / processSteps.length) * 100}%` }}
                   transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
                 />
               </div>
             </div>
 
-            {/* Right: Step detail (animated) */}
+            {/* Right: Step detail */}
             <div className="md:col-span-7 flex items-center min-h-[300px]">
               <AnimatePresence mode="wait">
                 <motion.div
@@ -775,17 +655,17 @@ export default function DesignFinal() {
                   transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
                   className="w-full"
                 >
-                  <div className="bg-zinc-900/50 border border-zinc-800/60 rounded-2xl p-8 md:p-12">
-                    <div className="w-14 h-14 rounded-xl bg-brand-blue/10 flex items-center justify-center text-brand-light mb-6">
-                      {processSteps[activeStep].icon}
+                  <div className="bg-white rounded-2xl shadow-sm p-8 md:p-12 border border-brand-gray">
+                    <div className="w-14 h-14 rounded-xl bg-brand-tint flex items-center justify-center text-brand-primary mb-6">
+                      <HugeiconsIcon icon={processSteps[activeStep].icon} size={28} />
                     </div>
-                    <h3 className="text-3xl md:text-4xl font-display font-medium tracking-tight mb-4">
+                    <h3 className="text-3xl md:text-4xl font-semibold tracking-tight text-brand-navy mb-4">
                       {processSteps[activeStep].title}
                     </h3>
-                    <p className="text-lg text-zinc-400 leading-relaxed mb-6 max-w-lg">
+                    <p className="text-lg text-brand-muted leading-relaxed mb-6 max-w-lg">
                       {processSteps[activeStep].desc}
                     </p>
-                    <div className="text-sm font-mono text-brand-light/80 tracking-wider uppercase">
+                    <div className="text-sm font-semibold text-brand-primary tracking-wider uppercase">
                       Typical Duration: {processSteps[activeStep].duration}
                     </div>
                   </div>
@@ -797,77 +677,67 @@ export default function DesignFinal() {
       </section>
 
 
-      {/* === 8. Pricing === */}
-      <section id="pricing" className="bg-[#fafafa] relative z-10 py-24 md:py-32">
-        <div className="max-w-7xl mx-auto px-8">
+      {/* === 7. Case Study === */}
+      <section id="case-study" className="py-24 md:py-32 bg-[#F8FAFC]">
+        <div className="max-w-7xl mx-auto px-6">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
+            variants={fadeUp}
+            className="mb-12"
           >
-            <div className="text-xs font-mono text-zinc-400 tracking-widest uppercase mb-4">
-              The Investment
-            </div>
-            <h2 className="text-4xl md:text-5xl font-display font-medium tracking-tighter mb-6 leading-[0.95]">
-              Two phases. No surprises.
-            </h2>
-            <p className="text-lg text-zinc-500 font-light leading-relaxed max-w-2xl mx-auto">
-              We work with established mid-market companies facing concrete operational challenges. Every engagement starts with a paid discovery phase — so there are no unknowns when we break ground.
-            </p>
+            <SectionBadge label="CASE STUDY" />
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            {/* Left: Placeholder image */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="bg-white p-8 md:p-10 rounded-2xl border border-zinc-200 shadow-lg shadow-zinc-200/50 flex flex-col"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6 }}
+              className="bg-brand-tint rounded-2xl aspect-[4/3] flex items-center justify-center"
             >
-              <div className="text-xs font-mono text-zinc-400 tracking-widest uppercase mb-3">
-                Phase 01 — Discovery
-              </div>
-              <div className="text-5xl md:text-6xl font-display font-medium tracking-tighter text-zinc-900 mb-3">
-                $20K<span className="text-2xl text-zinc-400 ml-1">– $25K</span>
-              </div>
-              <p className="text-zinc-500 text-sm leading-relaxed mb-6 flex-1">
-                4–6 weeks. We map your operations, interview stakeholders, and deliver a technical blueprint with ROI guarantees — before a single line of production code is written.
-              </p>
-              <motion.a
-                href="#"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="bg-zinc-900 text-white px-6 py-3 rounded-full font-medium text-sm flex items-center justify-center gap-2 hover:bg-zinc-800 transition-colors"
-              >
-                Start with Discovery <ArrowRight size={16} weight="duotone" />
-              </motion.a>
+              <span className="text-brand-muted text-sm">Case study image placeholder</span>
             </motion.div>
 
+            {/* Right: Content */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="bg-zinc-900 text-white p-8 md:p-10 rounded-2xl border border-zinc-800 shadow-lg shadow-zinc-900/20 flex flex-col"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={staggerContainer}
             >
-              <div className="text-xs font-mono text-zinc-500 tracking-widest uppercase mb-3">
-                Phase 02 — Build & Deploy
-              </div>
-              <div className="text-5xl md:text-6xl font-display font-medium tracking-tighter mb-3">
-                $100K<span className="text-2xl text-zinc-500 ml-1">– $500K</span>
-              </div>
-              <p className="text-zinc-400 text-sm leading-relaxed mb-6 flex-1">
-                3–12 months. Full-scale design, engineering, deployment, and training — with milestones tied to measurable business outcomes.
-              </p>
-              <motion.a
-                href="#"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="bg-white text-zinc-900 px-6 py-3 rounded-full font-medium text-sm flex items-center justify-center gap-2 hover:bg-zinc-100 transition-colors"
+              <motion.h2
+                variants={fadeUp}
+                className="text-3xl md:text-4xl font-semibold tracking-tight text-brand-navy leading-tight mb-8"
               >
-                Book a Discovery Call <ArrowRight size={16} weight="duotone" />
+                A state court system that hadn't updated since 2003.
+              </motion.h2>
+
+              <motion.div variants={fadeUp} className="flex gap-8 mb-8">
+                <div>
+                  <div className="text-3xl md:text-4xl font-bold text-brand-primary">40%</div>
+                  <div className="text-sm text-brand-muted mt-1">Faster Processing</div>
+                </div>
+                <div className="w-px bg-brand-gray" />
+                <div>
+                  <div className="text-3xl md:text-4xl font-bold text-brand-primary">Zero</div>
+                  <div className="text-sm text-brand-muted mt-1">Downtime in Transition</div>
+                </div>
+              </motion.div>
+
+              <motion.p variants={fadeUp} className="text-lg text-brand-muted mb-8 leading-relaxed">
+                We rebuilt their case management platform from the ground up — replacing a brittle legacy system with a modern, secure application — while keeping 2,000+ court staff operational throughout.
+              </motion.p>
+
+              <motion.a
+                variants={fadeUp}
+                href="#"
+                className="bg-brand-primary text-white rounded-full px-6 py-3 font-medium hover:bg-brand-navy transition-colors inline-flex items-center gap-2"
+              >
+                Read the Full Story <HugeiconsIcon icon={ArrowUpRight01Icon} size={18} />
               </motion.a>
             </motion.div>
           </div>
@@ -875,152 +745,248 @@ export default function DesignFinal() {
       </section>
 
 
-      {/* === 9. Testimonials — Marquee === */}
-      <section className="py-28 relative z-10 overflow-hidden border-t border-zinc-200/60">
-        <div className="max-w-7xl mx-auto px-8 mb-16">
+      {/* === 8. Pricing === */}
+      <section id="pricing" className="py-24 md:py-32 bg-gradient-to-br from-brand-navy to-brand-primary">
+        <div className="max-w-7xl mx-auto px-6">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="text-center mb-16"
           >
-            <div className="text-xs font-mono text-zinc-400 tracking-widest uppercase mb-4">
-              Client Results
-            </div>
-            <h2 className="text-4xl md:text-5xl font-display font-medium tracking-tighter leading-[0.95]">
-              What our partners say.
-            </h2>
+            <motion.div variants={fadeUp} className="flex items-center gap-2 mb-4 justify-center">
+              <span className="text-white/60">&#10022;</span>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-white/60">THE INVESTMENT</span>
+            </motion.div>
+            <motion.h2
+              variants={fadeUp}
+              className="text-4xl md:text-5xl font-semibold tracking-tight text-white leading-tight mb-6"
+            >
+              Simple, transparent{' '}
+              <span className="font-serif italic">pricing</span>
+            </motion.h2>
+            <motion.p variants={fadeUp} className="text-lg text-white/70 max-w-2xl mx-auto leading-relaxed">
+              We work with established mid-market companies facing concrete operational challenges. Every engagement starts with a paid discovery phase — so there are no unknowns when we break ground.
+            </motion.p>
           </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="bg-white p-8 md:p-10 rounded-2xl shadow-lg flex flex-col"
+            >
+              <div className="text-xs font-semibold tracking-[0.15em] uppercase text-brand-muted mb-3">
+                Phase 01 — Discovery
+              </div>
+              <div className="text-5xl md:text-6xl font-bold tracking-tight text-brand-navy mb-3">
+                $20K<span className="text-2xl text-brand-muted ml-1">– $25K</span>
+              </div>
+              <p className="text-brand-muted text-sm leading-relaxed mb-6 flex-1">
+                4–6 weeks. We map your operations, interview stakeholders, and deliver a technical blueprint with ROI guarantees — before a single line of production code is written.
+              </p>
+              <a
+                href="#"
+                className="bg-brand-primary text-white px-6 py-3 rounded-full font-medium text-sm flex items-center justify-center gap-2 hover:bg-brand-navy transition-colors"
+              >
+                Start with Discovery <HugeiconsIcon icon={ArrowRight01Icon} size={16} />
+              </a>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="bg-white p-8 md:p-10 rounded-2xl shadow-lg flex flex-col"
+            >
+              <div className="text-xs font-semibold tracking-[0.15em] uppercase text-brand-muted mb-3">
+                Phase 02 — Build & Deploy
+              </div>
+              <div className="text-5xl md:text-6xl font-bold tracking-tight text-brand-navy mb-3">
+                $100K<span className="text-2xl text-brand-muted ml-1">– $500K</span>
+              </div>
+              <p className="text-brand-muted text-sm leading-relaxed mb-6 flex-1">
+                3–12 months. Full-scale design, engineering, deployment, and training — with milestones tied to measurable business outcomes.
+              </p>
+              <a
+                href="#"
+                className="bg-brand-primary text-white px-6 py-3 rounded-full font-medium text-sm flex items-center justify-center gap-2 hover:bg-brand-navy transition-colors"
+              >
+                Book a Discovery Call <HugeiconsIcon icon={ArrowRight01Icon} size={16} />
+              </a>
+            </motion.div>
+          </div>
         </div>
+      </section>
 
-        {/* Testimonial marquee */}
-        <div className="relative">
-          <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#fafafa] to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#fafafa] to-transparent z-10 pointer-events-none" />
 
-          <div className="overflow-hidden">
-            <div className="flex gap-6 animate-marquee-slow whitespace-nowrap">
-              {[...testimonials, ...testimonials].map((t, i) => (
-                <div
+      {/* === 9. Testimonials === */}
+      <section className="py-24 md:py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid md:grid-cols-2 gap-16 items-start">
+            {/* Left: header */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={staggerContainer}
+            >
+              <motion.div variants={fadeUp}>
+                <SectionBadge label="TESTIMONIALS" />
+              </motion.div>
+              <motion.h2
+                variants={fadeUp}
+                className="text-4xl md:text-5xl font-semibold tracking-tight text-brand-navy leading-tight mb-6"
+              >
+                What our{' '}
+                <span className="font-serif italic">clients</span>{' '}
+                are saying
+              </motion.h2>
+              <motion.p variants={fadeUp} className="text-lg text-brand-muted leading-relaxed">
+                We let our results speak for themselves. Here's what our partners have to say about working with Azul Arc.
+              </motion.p>
+            </motion.div>
+
+            {/* Right: 2 testimonial cards */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={staggerContainer}
+              className="flex flex-col gap-6"
+            >
+              {testimonials.slice(0, 2).map((t, i) => (
+                <motion.div
                   key={i}
-                  className="bg-white/80 backdrop-blur-xl rounded-2xl border border-zinc-200/60 p-8 min-w-[380px] max-w-[380px] shrink-0 flex flex-col"
+                  variants={fadeUp}
+                  className="bg-white rounded-2xl shadow-sm p-8 border border-brand-gray"
                 >
-                  <Quotes size={32} weight="duotone" className="text-zinc-200 mb-4 shrink-0" />
-                  <p className="text-zinc-700 leading-relaxed mb-6 flex-1 whitespace-normal text-[15px]">
+                  <div className="text-brand-primary mb-4">
+                    <HugeiconsIcon icon={QuoteDownIcon} size={32} />
+                  </div>
+                  <p className="text-brand-dark leading-relaxed mb-6">
                     "{t.quote}"
                   </p>
-                  <div className="shrink-0">
-                    <div className="font-medium text-sm text-zinc-900">{t.name}</div>
-                    <div className="text-xs text-zinc-400 font-mono tracking-wider uppercase mt-0.5">{t.company}</div>
+                  <div>
+                    <div className="font-semibold text-sm text-brand-navy">{t.name}</div>
+                    <div className="text-xs text-brand-muted mt-0.5">{t.company}</div>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
 
       {/* === 10. Final CTA === */}
-      <section className="py-24 md:py-32 text-center px-8 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-4xl mx-auto"
-        >
-          <h2 className="text-[3rem] md:text-[6rem] font-display font-medium tracking-tighter mb-10 leading-[0.9] text-zinc-900">
-            Let's talk about what's<br className="hidden md:block" /> slowing you down.
-          </h2>
-          <motion.a
-            href="#"
-            whileHover={{ scale: 1.03, y: -2 }}
-            whileTap={{ scale: 0.97 }}
-            className="bg-zinc-900 text-white px-10 py-5 rounded-full font-medium inline-flex items-center gap-3 hover:bg-zinc-800 transition-all text-xl mx-auto mb-8 shadow-xl shadow-zinc-900/20"
+      <section className="py-24 md:py-32 bg-gradient-to-br from-brand-navy to-brand-primary">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
           >
-            Schedule Your Discovery Session <ArrowRight size={24} weight="duotone" />
-          </motion.a>
-          <p className="text-zinc-400 text-sm">
-            Discovery engagements start at $20K. No commitment beyond that.
-          </p>
-        </motion.div>
+            <motion.h2
+              variants={fadeUp}
+              className="text-4xl md:text-5xl font-semibold tracking-tight text-white leading-tight mb-6"
+            >
+              Achieve operational excellence with{' '}
+              <span className="font-serif italic">Azul Arc</span>
+            </motion.h2>
+            <motion.p variants={fadeUp} className="text-lg text-white/70 max-w-2xl mx-auto leading-relaxed mb-10">
+              Discovery engagements start at $20K. No commitment beyond that. Let's find out what's slowing you down.
+            </motion.p>
+            <motion.a
+              variants={fadeUp}
+              href="#"
+              className="bg-white text-brand-navy rounded-full px-8 py-4 font-medium hover:bg-brand-tint transition-colors inline-flex items-center gap-2 text-lg"
+            >
+              Schedule Your Discovery Session <HugeiconsIcon icon={ArrowRight01Icon} size={20} />
+            </motion.a>
+          </motion.div>
+        </div>
       </section>
 
 
-      {/* === Footer === */}
-      <footer className="bg-zinc-950 text-zinc-400 relative z-10">
-        <div className="max-w-7xl mx-auto px-8 pt-16 pb-8">
+      {/* === 11. Footer === */}
+      <footer className="bg-white border-t border-brand-gray">
+        <div className="max-w-7xl mx-auto px-6 pt-16 pb-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-12 mb-16">
             <div className="col-span-2 md:col-span-1">
               <a href="#" className="inline-block mb-4">
-                <img src="/azul-arc-logo.png" alt="Azul Arc" className="h-10 w-auto brightness-0 invert" />
+                <img src="/azul-arc-logo.png" alt="Azul Arc" className="h-10 w-auto" />
               </a>
-              <p className="text-sm text-zinc-500 leading-relaxed max-w-[200px] mb-4">
+              <p className="text-sm text-brand-muted leading-relaxed max-w-[200px] mb-4">
                 We build the software that runs your business.
               </p>
-              <a href="mailto:hello@azularc.com" className="text-sm text-zinc-500 hover:text-white transition-colors">
+              <a href="mailto:hello@azularc.com" className="text-sm text-brand-muted hover:text-brand-dark transition-colors">
                 hello@azularc.com
               </a>
             </div>
 
             <div>
-              <div className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-4">
+              <div className="text-xs font-semibold tracking-[0.15em] uppercase text-brand-muted mb-4">
                 Services
               </div>
               <ul className="space-y-2.5">
                 {['Who We Serve', 'Capabilities', 'How We Work', 'Case Studies'].map((link) => (
                   <li key={link}>
-                    <a href="#" className="text-sm text-zinc-500 hover:text-white transition-colors">{link}</a>
+                    <a href="#" className="text-sm text-brand-muted hover:text-brand-dark transition-colors">{link}</a>
                   </li>
                 ))}
               </ul>
             </div>
 
             <div>
-              <div className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-4">
+              <div className="text-xs font-semibold tracking-[0.15em] uppercase text-brand-muted mb-4">
                 Company
               </div>
               <ul className="space-y-2.5">
                 {['About', 'Insights', 'Contact'].map((link) => (
                   <li key={link}>
-                    <a href="#" className="text-sm text-zinc-500 hover:text-white transition-colors">{link}</a>
+                    <a href="#" className="text-sm text-brand-muted hover:text-brand-dark transition-colors">{link}</a>
                   </li>
                 ))}
               </ul>
             </div>
 
             <div>
-              <div className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-4">
+              <div className="text-xs font-semibold tracking-[0.15em] uppercase text-brand-muted mb-4">
                 Connect
               </div>
               <ul className="space-y-2.5">
                 <li>
-                  <a href="#" className="text-sm text-zinc-500 hover:text-white transition-colors flex items-center gap-2">
-                    <LinkedinLogo size={16} weight="duotone" /> LinkedIn
+                  <a href="#" className="text-sm text-brand-muted hover:text-brand-dark transition-colors flex items-center gap-2">
+                    <HugeiconsIcon icon={Linkedin01Icon} size={16} /> LinkedIn
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-sm text-zinc-500 hover:text-white transition-colors flex items-center gap-2">
-                    <XLogo size={16} weight="duotone" /> Twitter
+                  <a href="#" className="text-sm text-brand-muted hover:text-brand-dark transition-colors flex items-center gap-2">
+                    <HugeiconsIcon icon={NewTwitterIcon} size={16} /> Twitter
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-sm text-zinc-500 hover:text-white transition-colors flex items-center gap-2">
-                    <EnvelopeSimple size={16} weight="duotone" /> Email
+                  <a href="#" className="text-sm text-brand-muted hover:text-brand-dark transition-colors flex items-center gap-2">
+                    <HugeiconsIcon icon={Mail01Icon} size={16} /> Email
                   </a>
                 </li>
               </ul>
             </div>
           </div>
 
-          <div className="border-t border-zinc-800 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-xs text-zinc-600">
+          <div className="border-t border-brand-gray pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p className="text-xs text-brand-muted">
               &copy; {new Date().getFullYear()} Azul Arc. All rights reserved.
             </p>
             <div className="flex items-center gap-6">
-              <a href="#" className="text-xs text-zinc-600 hover:text-zinc-400 transition-colors">Privacy Policy</a>
-              <a href="#" className="text-xs text-zinc-600 hover:text-zinc-400 transition-colors">Terms of Service</a>
+              <a href="#" className="text-xs text-brand-muted hover:text-brand-dark transition-colors">Privacy Policy</a>
+              <a href="#" className="text-xs text-brand-muted hover:text-brand-dark transition-colors">Terms of Service</a>
             </div>
           </div>
         </div>
