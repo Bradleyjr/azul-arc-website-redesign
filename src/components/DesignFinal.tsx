@@ -375,6 +375,14 @@ export default function DesignFinal() {
           from { transform: scaleX(0); }
           to { transform: scaleX(1); }
         }
+        @keyframes glassRotate {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        @keyframes gentleFloat {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
       `}</style>
 
       {/* === 1. Navigation === */}
@@ -560,44 +568,29 @@ export default function DesignFinal() {
         {/* Desktop: sticky scroll experience */}
         <div className="hidden md:block" ref={aboutContainerRef} style={{ height: '250vh' }}>
           <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
-            {/* Photo 1 — far left */}
-            <motion.div
-              style={{ y: photo1Y }}
-              className="absolute left-[6%] z-10"
-            >
-              <div className="w-52 h-72 rounded-2xl bg-brand-tint shadow-lg -rotate-3 flex items-center justify-center">
-                <span className="text-brand-muted text-xs">Photo 1</span>
+            {/* Glass orb — far left */}
+            <motion.div style={{ y: photo1Y }} className="absolute left-[6%] z-10">
+              <div className="w-52 h-52 rounded-full bg-white/20 backdrop-blur-xl shadow-2xl border-t border-white/30 flex items-center justify-center">
+                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-brand-primary/20 to-brand-sky/20 blur-sm" />
               </div>
             </motion.div>
 
-            {/* Photo 2 — far right */}
-            <motion.div
-              style={{ y: photo2Y }}
-              className="absolute right-[8%] z-10"
-            >
-              <div className="w-48 h-64 rounded-2xl bg-brand-tint shadow-lg rotate-2 flex items-center justify-center">
-                <span className="text-brand-muted text-xs">Photo 2</span>
-              </div>
+            {/* Gradient disc — far right */}
+            <motion.div style={{ y: photo2Y }} className="absolute right-[8%] z-10">
+              <div className="w-64 h-64 rounded-full blur-2xl" style={{ background: 'radial-gradient(circle, rgba(42,167,223,0.15), rgba(24,99,220,0.1), transparent)' }} />
             </motion.div>
 
-            {/* Photo 3 — left-center */}
-            <motion.div
-              style={{ y: photo3Y }}
-              className="absolute left-[22%] z-10"
-            >
-              <div className="w-44 h-56 rounded-2xl bg-brand-tint shadow-lg rotate-1 flex items-center justify-center">
-                <span className="text-brand-muted text-xs">Photo 3</span>
-              </div>
+            {/* Glass card — left-center */}
+            <motion.div style={{ y: photo3Y }} className="absolute left-[20%] z-10">
+              <div className="w-44 h-56 rounded-3xl bg-white/15 backdrop-blur-lg shadow-xl border border-white/20 rotate-3" />
             </motion.div>
 
-            {/* Photo 4 — right-center */}
-            <motion.div
-              style={{ y: photo4Y }}
-              className="absolute right-[18%] z-10"
-            >
-              <div className="w-56 h-68 rounded-2xl bg-brand-tint shadow-lg -rotate-[1.5deg] flex items-center justify-center" style={{ height: '17rem' }}>
-                <span className="text-brand-muted text-xs">Photo 4</span>
-              </div>
+            {/* Geometric ring accent — right-center, passes in FRONT of text */}
+            <motion.div style={{ y: photo4Y }} className="absolute right-[16%] z-30 opacity-20">
+              <div
+                className="w-48 h-48 rounded-full border-2 border-brand-primary"
+                style={{ animation: 'glassRotate 40s linear infinite' }}
+              />
             </motion.div>
 
             {/* Centered text — on top */}
@@ -619,19 +612,10 @@ export default function DesignFinal() {
           <p className="text-3xl font-semibold text-brand-navy leading-tight mb-8">
             We are passionate about empowering mid-market companies to take control of their operations and achieve their growth goals.
           </p>
-          <div className="grid grid-cols-2 gap-3">
-            {[1, 2, 3, 4].map((i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
-                className="bg-brand-tint rounded-2xl h-32 flex items-center justify-center"
-              >
-                <span className="text-brand-muted text-xs">Photo {i}</span>
-              </motion.div>
-            ))}
+          <div className="flex justify-center gap-4 flex-wrap mt-8">
+            <div className="w-24 h-24 rounded-full bg-white/30 backdrop-blur-xl shadow-lg border-t border-white/20" style={{ animation: 'gentleFloat 6s ease-in-out infinite' }} />
+            <div className="w-32 h-32 rounded-full blur-xl" style={{ background: 'radial-gradient(circle, rgba(42,167,223,0.15), transparent)' }} />
+            <div className="w-20 h-20 rounded-2xl bg-white/20 backdrop-blur-lg shadow-md border border-white/15 rotate-12" style={{ animation: 'gentleFloat 8s ease-in-out infinite 1s' }} />
           </div>
         </div>
       </section>
