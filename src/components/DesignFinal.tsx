@@ -30,6 +30,7 @@ import {
 } from 'motion/react';
 import { useState, useRef, useEffect, type RefObject } from 'react';
 import HeroShader from './HeroShader';
+import SectionDivider from './SectionDivider';
 
 // --- Nav Data ---
 const navLinks = [
@@ -552,6 +553,7 @@ export default function DesignFinal() {
         </motion.div>
       </section>
 
+      <SectionDivider id="hero-about" fromColor="#ffffff" toColor="#F8FAFC" />
 
       {/* === 3. About — Sticky scroll with flying photos === */}
       <section id="about" className="bg-[#F8FAFC]">
@@ -704,6 +706,7 @@ export default function DesignFinal() {
         </div>
       </section>
 
+      <SectionDivider id="industries-caps" fromColor="#ffffff" toColor="#F8FAFC" />
 
       {/* === 5. Capabilities — Fixed horizontal scroll === */}
       <section id="capabilities" className="bg-[#F8FAFC]">
@@ -779,6 +782,7 @@ export default function DesignFinal() {
         </div>
       </section>
 
+      <SectionDivider id="caps-process" fromColor="#F8FAFC" toColor="#ffffff" flip />
 
       {/* === 6. Process — Interactive split layout === */}
       <section id="process" className="py-24 md:py-32 bg-white">
@@ -863,6 +867,7 @@ export default function DesignFinal() {
         </div>
       </section>
 
+      <SectionDivider id="process-casestudy" fromColor="#ffffff" toColor="#07406B" dramatic height={160} />
 
       {/* === 7. Case Study — Dark immersive === */}
       <section id="case-study" className="bg-brand-navy text-white py-24 md:py-32">
@@ -943,6 +948,7 @@ export default function DesignFinal() {
         </div>
       </section>
 
+      <SectionDivider id="casestudy-booking" fromColor="#07406B" toColor="#F8FAFC" flip height={140} />
 
       {/* === 8. Discovery Call Booking === */}
       <section id="book" className="bg-[#F8FAFC] py-24 md:py-32">
