@@ -1,19 +1,18 @@
-@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-sans: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "DM Serif Display", ui-serif, Georgia, serif;
 }
 
-/* Tell Tailwind these color tokens exist (defined in brand.css) so it generates utilities */
 @theme inline {
-  --color-brand-blue: #2176b9;
-  --color-brand-orange: #fa9200;
-  --color-brand-dark: #125f9c;
-  --color-brand-light: #2aa7df;
-  --font-display: "Cabinet Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --color-brand-primary: #1863DC;
+  --color-brand-navy: #07406B;
+  --color-brand-sky: #2AA7DF;
+  --color-brand-gray: #EBEBEB;
+  --color-brand-dark: #212121;
+  --color-brand-muted: #808285;
+  --color-brand-tint: #EBF4FF;
 }
 
 .mask-edges {

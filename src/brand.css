@@ -1,8 +1,9 @@
-/* Brand tokens — separate from Tailwind processing */
 :root {
-  --font-display: "Cabinet Grotesk", ui-sans-serif, system-ui, sans-serif;
-  --color-brand-blue: #2176b9;
-  --color-brand-orange: #fa9200;
-  --color-brand-dark: #125f9c;
-  --color-brand-light: #2aa7df;
+  --color-brand-primary: #1863DC;
+  --color-brand-navy: #07406B;
+  --color-brand-sky: #2AA7DF;
+  --color-brand-gray: #EBEBEB;
+  --color-brand-dark: #212121;
+  --color-brand-muted: #808285;
+  --color-brand-tint: #EBF4FF;
 }
