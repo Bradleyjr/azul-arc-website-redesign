@@ -35,19 +35,31 @@ const HeroBackground = () => (
 
 // --- Nav Data ---
 const navLinks = [
-  { label: 'Who We Serve', href: '#who-we-serve', hasDropdown: true },
-  { label: 'Capabilities', href: '#capabilities' },
+  { label: 'Industries', href: '#industries', hasDropdown: true, dropdownKey: 'industries' },
+  { label: 'What We Do', href: '#what-we-do', hasDropdown: true, dropdownKey: 'whatWeDo' },
   { label: 'How We Work', href: '#process' },
-  { label: 'Case Studies', href: '#case-study' },
-  { label: 'Pricing', href: '#pricing' },
-  { label: 'About', href: '#' },
+  { label: 'Work', href: '#work' },
+  { label: 'Insights & Resources', href: '#insights' },
+  { label: 'About', href: '#about' },
 ];
 
-const segments = [
-  { label: 'Court Systems', href: '#who-we-serve', desc: 'GovTech & judicial modernization' },
-  { label: 'Product Manufacturers', href: '#who-we-serve', desc: 'Sales tools & commercial platforms' },
-  { label: 'Growth-Stage SMBs', href: '#who-we-serve', desc: 'Scaling operations & legacy replacement' },
+const industries = [
+  { label: 'Court Systems', href: '#industries', desc: 'GovTech & judicial modernization', image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&h=300&fit=crop&q=80' },
+  { label: 'Product Manufacturers', href: '#industries', desc: 'Sales tools & commercial platforms', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop&q=80' },
+  { label: 'Growth-Stage SMBs', href: '#industries', desc: 'Scaling operations & legacy replacement', image: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&h=300&fit=crop&q=80' },
 ];
+
+const services = [
+  { label: 'Digital Product Strategy', href: '#what-we-do', desc: 'Research-driven roadmaps for digital products', image: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=400&h=300&fit=crop&q=80' },
+  { label: 'Custom Web Design & Development', href: '#what-we-do', desc: 'Bespoke platforms built for your workflow', image: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=400&h=300&fit=crop&q=80' },
+  { label: '3D Visualisation', href: '#what-we-do', desc: 'Immersive 3D experiences & product renders', image: 'https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=400&h=300&fit=crop&q=80' },
+  { label: 'Case Management Systems', href: '#what-we-do', desc: 'End-to-end case tracking & automation', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop&q=80' },
+];
+
+const dropdownItems: Record<string, typeof industries> = {
+  industries,
+  whatWeDo: services,
+};
 
 // --- Challenge Data ---
 const challenges = [
@@ -211,7 +223,7 @@ const testimonials = [
 export default function DesignFinal() {
   const [activeCard, setActiveCard] = useState<number | null>(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [serveDropdownOpen, setServeDropdownOpen] = useState(false);
+  const [mobileDropdownOpen, setMobileDropdownOpen] = useState<string | null>(null);
   const [activeStep, setActiveStep] = useState(0);
 
 
@@ -277,19 +289,31 @@ export default function DesignFinal() {
                   {link.hasDropdown && <CaretDown size={14} weight="duotone" className="text-zinc-400 group-hover:text-zinc-600 transition-colors" />}
                 </a>
 
-                {link.hasDropdown && (
-                  <div className="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                    <div className="bg-white/90 backdrop-blur-xl rounded-xl border border-zinc-200/60 shadow-xl shadow-zinc-200/40 p-2 min-w-[280px]">
-                      {segments.map((seg) => (
-                        <a
-                          key={seg.label}
-                          href={seg.href}
-                          className="flex flex-col gap-0.5 px-4 py-3 rounded-lg hover:bg-zinc-50 transition-colors"
-                        >
-                          <span className="text-sm font-medium text-zinc-900">{seg.label}</span>
-                          <span className="text-xs text-zinc-500">{seg.desc}</span>
-                        </a>
-                      ))}
+                {link.hasDropdown && link.dropdownKey && (
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                    <div className="bg-white rounded-2xl border border-zinc-200 shadow-2xl shadow-zinc-300/40 p-4">
+                      <div className={`grid gap-3 ${link.dropdownKey === 'industries' ? 'grid-cols-3 w-[680px]' : 'grid-cols-4 w-[860px]'}`}>
+                        {dropdownItems[link.dropdownKey]?.map((item) => (
+                          <a
+                            key={item.label}
+                            href={item.href}
+                            className="group/card flex flex-col rounded-xl overflow-hidden border border-zinc-100 hover:border-zinc-200 hover:shadow-lg hover:shadow-zinc-200/40 transition-all duration-300 hover:-translate-y-0.5"
+                          >
+                            <div className="relative aspect-[4/3] overflow-hidden bg-zinc-100">
+                              <img
+                                src={item.image}
+                                alt={item.label}
+                                className="w-full h-full object-cover transition-transform duration-500 group-hover/card:scale-105"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                            </div>
+                            <div className="p-3 flex flex-col gap-1">
+                              <span className="text-sm font-semibold text-zinc-900 group-hover/card:text-brand-blue transition-colors">{item.label}</span>
+                              <span className="text-xs text-zinc-500 leading-relaxed">{item.desc}</span>
+                            </div>
+                          </a>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 )}
@@ -331,17 +355,17 @@ export default function DesignFinal() {
               <div className="px-6 py-4 flex flex-col gap-1">
                 {navLinks.map((link) => (
                   <div key={link.label}>
-                    {link.hasDropdown ? (
+                    {link.hasDropdown && link.dropdownKey ? (
                       <>
                         <button
-                          onClick={() => setServeDropdownOpen(!serveDropdownOpen)}
+                          onClick={() => setMobileDropdownOpen(mobileDropdownOpen === link.dropdownKey ? null : link.dropdownKey!)}
                           className="w-full flex items-center justify-between px-3 py-3 text-base font-medium text-zinc-700 hover:text-zinc-900 transition-colors"
                         >
                           {link.label}
-                          <CaretDown size={16} weight="duotone" className={`text-zinc-400 transition-transform ${serveDropdownOpen ? 'rotate-180' : ''}`} />
+                          <CaretDown size={16} weight="duotone" className={`text-zinc-400 transition-transform ${mobileDropdownOpen === link.dropdownKey ? 'rotate-180' : ''}`} />
                         </button>
                         <AnimatePresence>
-                          {serveDropdownOpen && (
+                          {mobileDropdownOpen === link.dropdownKey && (
                             <motion.div
                               initial={{ opacity: 0, height: 0 }}
                               animate={{ opacity: 1, height: "auto" }}
@@ -349,9 +373,9 @@ export default function DesignFinal() {
                               transition={{ duration: 0.2 }}
                               className="pl-4 overflow-hidden"
                             >
-                              {segments.map((seg) => (
-                                <a key={seg.label} href={seg.href} className="block px-3 py-2.5 text-sm text-zinc-600 hover:text-zinc-900 transition-colors">
-                                  {seg.label}
+                              {dropdownItems[link.dropdownKey]?.map((item) => (
+                                <a key={item.label} href={item.href} className="block px-3 py-2.5 text-sm text-zinc-600 hover:text-zinc-900 transition-colors">
+                                  {item.label}
                                 </a>
                               ))}
                             </motion.div>
@@ -966,12 +990,12 @@ export default function DesignFinal() {
 
             <div>
               <div className="text-xs font-mono text-zinc-600 tracking-widest uppercase mb-4">
-                Services
+                What We Do
               </div>
               <ul className="space-y-2.5">
-                {['Who We Serve', 'Capabilities', 'How We Work', 'Case Studies'].map((link) => (
+                {['Digital Product Strategy', 'Web Design & Development', '3D Visualisation', 'Case Management Systems'].map((link) => (
                   <li key={link}>
-                    <a href="#" className="text-sm text-zinc-500 hover:text-white transition-colors">{link}</a>
+                    <a href="#what-we-do" className="text-sm text-zinc-500 hover:text-white transition-colors">{link}</a>
                   </li>
                 ))}
               </ul>
@@ -982,9 +1006,16 @@ export default function DesignFinal() {
                 Company
               </div>
               <ul className="space-y-2.5">
-                {['About', 'Insights', 'Contact'].map((link) => (
-                  <li key={link}>
-                    <a href="#" className="text-sm text-zinc-500 hover:text-white transition-colors">{link}</a>
+                {[
+                  { label: 'About', href: '#about' },
+                  { label: 'How We Work', href: '#process' },
+                  { label: 'Work', href: '#work' },
+                  { label: 'Insights & Resources', href: '#insights' },
+                  { label: 'Careers', href: '#careers' },
+                  { label: 'Contact', href: '#contact' },
+                ].map((link) => (
+                  <li key={link.label}>
+                    <a href={link.href} className="text-sm text-zinc-500 hover:text-white transition-colors">{link.label}</a>
                   </li>
                 ))}
               </ul>
@@ -1019,8 +1050,7 @@ export default function DesignFinal() {
               &copy; {new Date().getFullYear()} Azul Arc. All rights reserved.
             </p>
             <div className="flex items-center gap-6">
-              <a href="#" className="text-xs text-zinc-600 hover:text-zinc-400 transition-colors">Privacy Policy</a>
-              <a href="#" className="text-xs text-zinc-600 hover:text-zinc-400 transition-colors">Terms of Service</a>
+              <a href="#privacy" className="text-xs text-zinc-600 hover:text-zinc-400 transition-colors">Privacy Policy / Legal</a>
             </div>
           </div>
         </div>
