@@ -18,6 +18,7 @@ import {
   CodeIcon,
   ArrowLeft01Icon,
   CheckmarkCircle01Icon,
+  ArrowDown01Icon,
 } from '@hugeicons/core-free-icons';
 import {
   motion,
@@ -34,12 +35,31 @@ import HeroShader from './HeroShader';
 
 // --- Nav Data ---
 const navLinks = [
+  { label: 'Industries', href: '#industries', hasDropdown: true, dropdownKey: 'industries' },
+  { label: 'What We Do', href: '#what-we-do', hasDropdown: true, dropdownKey: 'whatWeDo' },
+  { label: 'How We Work', href: '#process' },
+  { label: 'Work', href: '#work' },
+  { label: 'Insights & Resources', href: '#insights' },
   { label: 'About', href: '#about' },
-  { label: 'Industries', href: '#who-we-serve' },
-  { label: 'Capabilities', href: '#capabilities' },
-  { label: 'Process', href: '#process' },
-  { label: 'Case Study', href: '#case-study' },
 ];
+
+const industries = [
+  { label: 'Court Systems', href: '#industries', desc: 'GovTech & judicial modernization', image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&h=300&fit=crop&q=80' },
+  { label: 'Product Manufacturers', href: '#industries', desc: 'Sales tools & commercial platforms', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop&q=80' },
+  { label: 'Growth-Stage SMBs', href: '#industries', desc: 'Scaling operations & legacy replacement', image: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&h=300&fit=crop&q=80' },
+];
+
+const services = [
+  { label: 'Digital Product Strategy', href: '#what-we-do', desc: 'Research-driven roadmaps for digital products', image: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=400&h=300&fit=crop&q=80' },
+  { label: 'Custom Web Design & Development', href: '#what-we-do', desc: 'Bespoke platforms built for your workflow', image: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=400&h=300&fit=crop&q=80' },
+  { label: '3D Visualisation', href: '#what-we-do', desc: 'Immersive 3D experiences & product renders', image: 'https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=400&h=300&fit=crop&q=80' },
+  { label: 'Case Management Systems', href: '#what-we-do', desc: 'End-to-end case tracking & automation', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop&q=80' },
+];
+
+const dropdownItems: Record<string, typeof industries> = {
+  industries,
+  whatWeDo: services,
+};
 
 // --- Challenge Data ---
 const challenges = [
@@ -330,6 +350,7 @@ function CalendarWidget() {
 // --- Main Component ---
 export default function DesignFinal() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileDropdownOpen, setMobileDropdownOpen] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState(0);
   const [activeProcessStep, setActiveProcessStep] = useState(0);
 
@@ -401,13 +422,44 @@ export default function DesignFinal() {
             className="hidden lg:flex items-center gap-1"
           >
             {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="px-3 py-2 text-sm font-medium text-brand-muted hover:text-brand-dark transition-colors"
-              >
-                {link.label}
-              </a>
+              <div key={link.label} className="relative group">
+                <a
+                  href={link.href}
+                  className="px-3 py-2 text-sm font-medium text-brand-muted hover:text-brand-dark transition-colors flex items-center gap-1"
+                >
+                  {link.label}
+                  {link.hasDropdown && <HugeiconsIcon icon={ArrowDown01Icon} size={14} className="text-brand-muted/60 group-hover:text-brand-dark transition-colors" />}
+                </a>
+
+                {link.hasDropdown && link.dropdownKey && (
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                    <div className="bg-white rounded-2xl border border-brand-gray shadow-2xl shadow-zinc-300/40 p-4">
+                      <div className={`grid gap-3 ${link.dropdownKey === 'industries' ? 'grid-cols-3 w-[680px]' : 'grid-cols-4 w-[860px]'}`}>
+                        {dropdownItems[link.dropdownKey]?.map((item) => (
+                          <a
+                            key={item.label}
+                            href={item.href}
+                            className="group/card flex flex-col rounded-xl overflow-hidden border border-brand-gray hover:border-brand-primary/30 hover:shadow-lg hover:shadow-brand-primary/5 transition-all duration-300 hover:-translate-y-0.5"
+                          >
+                            <div className="relative aspect-[4/3] overflow-hidden bg-brand-tint">
+                              <img
+                                src={item.image}
+                                alt={item.label}
+                                className="w-full h-full object-cover transition-transform duration-500 group-hover/card:scale-105"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                            </div>
+                            <div className="p-3 flex flex-col gap-1">
+                              <span className="text-sm font-semibold text-brand-navy group-hover/card:text-brand-primary transition-colors">{item.label}</span>
+                              <span className="text-xs text-brand-muted leading-relaxed">{item.desc}</span>
+                            </div>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             ))}
           </motion.nav>
 
@@ -445,14 +497,44 @@ export default function DesignFinal() {
             >
               <div className="px-6 py-4 flex flex-col gap-1">
                 {navLinks.map((link) => (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    className="block px-3 py-3 text-base font-medium text-brand-muted hover:text-brand-dark transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {link.label}
-                  </a>
+                  <div key={link.label}>
+                    {link.hasDropdown && link.dropdownKey ? (
+                      <>
+                        <button
+                          onClick={() => setMobileDropdownOpen(mobileDropdownOpen === link.dropdownKey ? null : link.dropdownKey!)}
+                          className="w-full flex items-center justify-between px-3 py-3 text-base font-medium text-brand-muted hover:text-brand-dark transition-colors"
+                        >
+                          {link.label}
+                          <HugeiconsIcon icon={ArrowDown01Icon} size={16} className={`text-brand-muted transition-transform ${mobileDropdownOpen === link.dropdownKey ? 'rotate-180' : ''}`} />
+                        </button>
+                        <AnimatePresence>
+                          {mobileDropdownOpen === link.dropdownKey && (
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: "auto" }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.2 }}
+                              className="pl-4 overflow-hidden"
+                            >
+                              {dropdownItems[link.dropdownKey]?.map((item) => (
+                                <a key={item.label} href={item.href} className="block px-3 py-2.5 text-sm text-brand-muted hover:text-brand-dark transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                                  {item.label}
+                                </a>
+                              ))}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </>
+                    ) : (
+                      <a
+                        href={link.href}
+                        className="block px-3 py-3 text-base font-medium text-brand-muted hover:text-brand-dark transition-colors"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        {link.label}
+                      </a>
+                    )}
+                  </div>
                 ))}
                 <div className="pt-3 mt-2 border-t border-brand-gray">
                   <a
@@ -1174,12 +1256,12 @@ export default function DesignFinal() {
 
             <div>
               <div className="text-xs font-semibold tracking-[0.15em] uppercase text-brand-muted mb-4">
-                Services
+                What We Do
               </div>
               <ul className="space-y-2.5">
-                {['Who We Serve', 'Capabilities', 'How We Work', 'Case Studies'].map((link) => (
+                {['Digital Product Strategy', 'Web Design & Development', '3D Visualisation', 'Case Management Systems'].map((link) => (
                   <li key={link}>
-                    <a href="#" className="text-sm text-brand-muted hover:text-brand-dark transition-colors">{link}</a>
+                    <a href="#what-we-do" className="text-sm text-brand-muted hover:text-brand-dark transition-colors">{link}</a>
                   </li>
                 ))}
               </ul>
@@ -1190,9 +1272,16 @@ export default function DesignFinal() {
                 Company
               </div>
               <ul className="space-y-2.5">
-                {['About', 'Insights', 'Contact'].map((link) => (
-                  <li key={link}>
-                    <a href="#" className="text-sm text-brand-muted hover:text-brand-dark transition-colors">{link}</a>
+                {[
+                  { label: 'About', href: '#about' },
+                  { label: 'How We Work', href: '#process' },
+                  { label: 'Work', href: '#work' },
+                  { label: 'Insights & Resources', href: '#insights' },
+                  { label: 'Careers', href: '#careers' },
+                  { label: 'Contact', href: '#contact' },
+                ].map((link) => (
+                  <li key={link.label}>
+                    <a href={link.href} className="text-sm text-brand-muted hover:text-brand-dark transition-colors">{link.label}</a>
                   </li>
                 ))}
               </ul>
@@ -1243,8 +1332,7 @@ export default function DesignFinal() {
               &copy; {new Date().getFullYear()} Azul Arc. All rights reserved.
             </p>
             <div className="flex items-center gap-6">
-              <a href="#" className="text-xs text-brand-muted hover:text-brand-dark transition-colors">Privacy Policy</a>
-              <a href="#" className="text-xs text-brand-muted hover:text-brand-dark transition-colors">Terms of Service</a>
+              <a href="#privacy" className="text-xs text-brand-muted hover:text-brand-dark transition-colors">Privacy Policy / Legal</a>
             </div>
           </div>
         </div>
